@@ -1,0 +1,57 @@
+Arguments: 
+  /usr/local/bin/node /usr/share/yarn/bin/yarn.js start
+
+PATH: 
+  /home/leiser/bin:/home/leiser/.local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:/usr/lib/jvm/java-8-oracle/bin:/usr/lib/jvm/java-8-oracle/db/bin:/usr/lib/jvm/java-8-oracle/jre/bin:/home/leiser/Development/gradle-4.6/bin:/home/leiser/Development/apache-tomcat-8.5.29/bin
+
+Yarn version: 
+  1.5.1
+
+Node version: 
+  8.11.1
+
+Platform: 
+  linux x64
+
+npm manifest: 
+  {
+    "name": "my-app",
+    "version": "0.1.0",
+    "private": true,
+    "dependencies": {
+      "axios": "^0.18.0",
+      "bootstrap": "^4.1.0",
+      "react": "^16.3.1",
+      "react-bootstrap": "^0.32.1",
+      "react-dom": "^16.3.1",
+      "react-scripts": "1.1.4"
+    },
+    "scripts": {
+      "start": "react-scripts start",
+      "build": "react-scripts build",
+      "test": "react-scripts test --env=jsdom",
+      "eject": "react-scripts eject"
+    }
+  }
+
+yarn manifest: 
+  No manifest
+
+Lockfile: 
+  No lockfile
+
+Trace: 
+  Error: Command failed.
+  Exit code: 127
+  Command: sh
+  Arguments: -c react-scripts start
+  Directory: /home/leiser/Development/react-tutorial/my-app
+  Output:
+  
+      at ProcessTermError.MessageError (/usr/share/yarn/lib/cli.js:186:110)
+      at new ProcessTermError (/usr/share/yarn/lib/cli.js:226:113)
+      at ChildProcess.<anonymous> (/usr/share/yarn/lib/cli.js:30281:17)
+      at emitTwo (events.js:126:13)
+      at ChildProcess.emit (events.js:214:7)
+      at maybeClose (internal/child_process.js:925:16)
+      at Process.ChildProcess._handle.onexit (internal/child_process.js:209:5)
