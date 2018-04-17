@@ -3,8 +3,21 @@ import logo from './logo.svg';
 import Axios from 'axios'
 import ProductList from './ProductList/ProductList'
 import './App.css';
+import { BrowserRouter as Router } from 'react-router'
+import Route from 'react-router-dom/Route'
 
-  /*
+/*
+  
+// You can choose your kind of history here (e.g. browserHistory)
+// Your routes.js file
+
+ReactDOM.render(
+  <Router routes={routes} history={history} />,
+  document.getElementById('your-app')
+);
+/*ReactDOM.render( 
+    < App / > , document.getElementById('root')
+);
     <div className = "App-intro" >
                     <ProductList products = { this.state.products }
                     /> 
@@ -40,7 +53,7 @@ import './App.css';
           </div>
           */
 
-          /*
+/*
           Código del producto
         Nombre del producto
          Fecha de vencimiento
@@ -65,78 +78,77 @@ class App extends Component {
     state = {
         loading: true,
         products: [],
-        color: 'aquamarine',       
-         color2: 'red',
+        color: 'aquamarine',
+        color2: 'red',
 
 
         setter: false,
-        jsons: [
-          {
-            "id": "2baf70d1-42bb-4437-b551-e5fed5a87abe",
-            "nombre": "Chela",
-            "fechaVencimiento": "ojala nunca",
-            "categoria": "importada",
-            "precio": "luka"
-           
-          },
-          {
-            "id": "2baf70d1-4assa2bb-4437-b551-e5fed5a87abe",
-            "nombre": "agua",
-            "fechaVencimiento": "ojala nuncax4 ",
-            "categoria": "nacional",
-            "precio": "5666"
-           
-          },
-          {
-            "id": "2baf7sdsd0d1-42bb-4437-b551-e5fed5a87abe",
-            "nombre": "vaso plastico",
-            "fechaVencimiento": "ojala nuncax2",
-            "categoria": "importada",
-            "precio": "muchas lukas"
-           
-          },
-          {
-            "id": "2baf70d1-4assa2bb-4437-b551-e5fed5a87abe",
-            "nombre": "agua",
-            "fechaVencimiento": "ojala nuncax4 ",
-            "categoria": "nacional",
-            "precio": "5666"
-           
-          },
-          {
-            "id": "2baf70d1-4assa2bb-4437-b551-e5fed5a87abe",
-            "nombre": "agua",
-            "fechaVencimiento": "ojala nuncax4 ",
-            "categoria": "nacional",
-            "precio": "5666"
-           
-          },
-          {
-            "id": "2baf70d1-4assa2bb-4437-b551-e5fed5a87abe",
-            "nombre": "agua",
-            "fechaVencimiento": "ojala nuncax4 ",
-            "categoria": "nacional",
-            "precio": "5666"
-           
-          }
+        jsons: [{
+                "id": "2baf70d1-42bb-4437-b551-e5fed5a87abe",
+                "nombre": "Chela",
+                "fechaVencimiento": "ojala nunca",
+                "categoria": "importada",
+                "precio": "luka"
+
+            },
+            {
+                "id": "2baf70d1-4assa2bb-4437-b551-e5fed5a87abe",
+                "nombre": "agua",
+                "fechaVencimiento": "ojala nuncax4 ",
+                "categoria": "nacional",
+                "precio": "5666"
+
+            },
+            {
+                "id": "2baf7sdsd0d1-42bb-4437-b551-e5fed5a87abe",
+                "nombre": "vaso plastico",
+                "fechaVencimiento": "ojala nuncax2",
+                "categoria": "importada",
+                "precio": "muchas lukas"
+
+            },
+            {
+                "id": "2baf70d1-4assa2bb-4437-b551-e5fed5a87abe",
+                "nombre": "agua",
+                "fechaVencimiento": "ojala nuncax4 ",
+                "categoria": "nacional",
+                "precio": "5666"
+
+            },
+            {
+                "id": "2baf70d1-4assa2bb-4437-b551-e5fed5a87abe",
+                "nombre": "agua",
+                "fechaVencimiento": "ojala nuncax4 ",
+                "categoria": "nacional",
+                "precio": "5666"
+
+            },
+            {
+                "id": "2baf70d1-4assa2bb-4437-b551-e5fed5a87abe",
+                "nombre": "agua",
+                "fechaVencimiento": "ojala nuncax4 ",
+                "categoria": "nacional",
+                "precio": "5666"
+
+            }
         ]
     }
 
     fetchFilms() {
-      console.log(this.state.films);
-          
-      Axios.get('https://ghibliapi.herokuapp.com/films')
-      .then(response => {
-        console.log(this.state.jsons);
-          this.setState({ products: this.state.jsons });
-          console.log(this.state.products)
-      })
-      .catch(function(error) {
-          console.log(error)
-      })
-     // console.log(this.state.color2)
-      //this.setState({ color2: this.state.color });
-     // console.log(this.state.color2);
+        console.log(this.state.films);
+
+        Axios.get('https://ghibliapi.herokuapp.com/films')
+            .then(response => {
+                console.log(this.state.jsons);
+                this.setState({ products: this.state.jsons });
+                console.log(this.state.products)
+            })
+            .catch(function(error) {
+                console.log(error)
+            })
+            // console.log(this.state.color2)
+            //this.setState({ color2: this.state.color });
+            // console.log(this.state.color2);
 
     }
 
@@ -229,5 +241,6 @@ class App extends Component {
         );
     }
 }
+
 
 export default App;
