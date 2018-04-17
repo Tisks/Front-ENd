@@ -73,23 +73,137 @@ ReactDOM.render(
             })
             */
 
-class ComponentB extends Component{
-  render(){
-    console.log(this.props)
-      return(
-          <h1>hola</h1>
 
-      );
-
-  }
-
-
-}
-
-
-
+           class ComponentB extends Component{
+            constructor(){
+              super();
+              this.state ={
+                nombreProducto:"",
+                fechaVencimiento:"",
+                categoriaProducto:"",
+                precioProducto:"",
+              }
+            }
+          
+            render(){
+              console.log(this.props)
+                return(
+                  <div  class="text-center">
+                    <h1>Agregar Producto</h1>
+          
+                      <label>Nombre del producto</label>  
+                      <ul><input type="text" value={this.state.nombreProducto} onChange={this.updateNombreP.bind(this)} /> </ul>
+                      <label>Fecha de vencimiento</label>  
+                      <ul> <input type="date" value={this.state.fechaVencimiento} onChange={this.updateFechaV.bind(this)} /> </ul>
+                      <label>Categoría</label>  
+                      <ul><select value={this.state.categoriaProducto} onChange={this.updateCategoriaP.bind(this)}>
+                          <option value="nacional">Nacional</option>
+                          <option value="internacional">Internacional</option>
+                        </select> 
+                      </ul>
+                     <label>Precio</label>  
+                      <ul> <input type="number" min="159" max="20990" defaultValue="4999" value={this.state.precioProducto} onChange={this.updatePrecioP.bind(this)} /> </ul>
+          
+                      <div>
+                        <button onClick={this.agregarProducto.bind(this)} className="btn btn-primary"  > Agregar </button>
+                        <button onClick={this.resetForm} type="button" className="btn btn-danger"> Cancelar </button>
+                      </div>
+                  </div>
+                );
+            }
+          
+            updateNombreP(event){
+              this.setState({
+                nombreProducto: event.target.value
+              });
+            }
+            updateFechaV(event){
+              this.setState({
+                fechaVencimiento: event.target.value
+              });
+            }
+            updateCategoriaP(event){
+              this.setState({
+                categoriaProducto: event.target.value
+              });
+            }
+            updatePrecioP(event){
+              this.setState({
+                precioProducto: event.target.value
+              });
+            }
+            agregarProducto(){
+              alert('Producto agregado ' + this.state.nombreProducto);
+            }
+          }
+          
+          
+          
+          /*class ComponentC extends Component{
+            constructor(){
+              super();
+              this.state ={
+                nombreProducto:"",
+                fechaVencimiento:"",
+                categoriaProducto:"",
+                precioProducto:"",
+              }
+            }
+          
+            render(){
+              console.log(this.props)
+                return(
+                  <div  class="text-center">
+                    <h1>Editar Producto</h1>
+          
+                      <label>Nombre del producto</label>  
+                      <ul><input type="text" value={this.state.nombreProducto} onChange={this.updateNombreP.bind(this)} /> </ul>
+                      <label>Fecha de vencimiento</label>  
+                      <ul> <input type="date" value={this.state.fechaVencimiento} onChange={this.updateFechaV.bind(this)} /> </ul>
+                      <label>Categoría</label>  
+                      <ul><select value={this.state.categoriaProducto} onChange={this.updateCategoriaP.bind(this)}>
+                          <option value="nacional">Nacional</option>
+                          <option value="internacional">Internacional</option>
+                        </select> 
+                      </ul>
+                     <label>Precio</label>  
+                      <ul> <input type="number" min="159" max="20990" defaultvalue="4999" value={this.state.precioProducto} onChange={this.updatePrecioP.bind(this)} /> </ul>
+          
+                      <div>
+                        <button onClick={this.agregarProducto.bind(this)} className="btn btn-primary"  > Agregar </button>
+                        <button onClick={this.resetForm} type="button" className="btn btn-danger"> Cancelar </button>
+                      </div>
+                  </div>
+                );
+            }
+          
+            updateNombreP(event){
+              this.setState({
+                nombreProducto: event.target.value
+              });
+            }
+            updateFechaV(event){
+              this.setState({
+                fechaVencimiento: event.target.value
+              });
+            }
+            updateCategoriaP(event){
+              this.setState({
+                categoriaProducto: event.target.value
+              });
+            }
+            updatePrecioP(event){
+              this.setState({
+                precioProducto: event.target.value
+              });
+            }
+            agregarProducto(){
+              alert('Producto agregado ' + this.state.nombreProducto);
+            }
+          }*/
 
 class App extends Component {
+
 
 
     state = {
@@ -98,6 +212,7 @@ class App extends Component {
         color: 'aquamarine',
         color2: 'red',
         view: '',
+        producto:[],
 
 
         setter: false,
@@ -183,21 +298,22 @@ class App extends Component {
 
         }
     }
-
     componentDidMount() {
         this.fetchFilms()
+    }
+    componentWillUnmount() {
     }
 
     render() {
       if (this.state.view === "AgregarEditar") return  <ComponentB color={this.state.color} /> ;
-      if (this.state.view === "department") return <div > apple </div>;
         return ( 
         <div className = "App" >
 
             <nav className="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
               <div className="container">
                 <a className="navbar-brand" href="#">Start Bootstrap</a>
-                <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+                <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" 
+                      aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
                   <span className="navbar-toggler-icon"></span>
                 </button>
                 <div className="collapse navbar-collapse" id="navbarResponsive">
@@ -227,15 +343,15 @@ class App extends Component {
         
                 <div className="col-lg-3">        
                   <h1 className="my-4">Shop Name</h1>
-                  <tr>
+                  <ul>
                   <input type="button"  className="btn btn-primary" value="Agregar" onClick = {this.loadAgregarEditar}></input>
                   <input type="button"  className="btn btn-warning" value="Editar"></input>                      
-                  </tr>  
-                  <tr>
+                  </ul>
+                  <ul>
                   <input type="button"  className="btn btn-danger" value="Eliminar"></input>   
-                  </tr>        
+                  </ul>       
                 </div>
-                
+              
         
               
         

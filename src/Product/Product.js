@@ -28,10 +28,27 @@ import React, { Component } from 'react'
             "precio": "luka"
 */
 class Product extends Component {
+  state = {
+      myProps:[],
+  }
+  
+  constructor(props) {
+    super(props);
+    console.log(this.props)
+    this.state.myProps = this.props 
+    console.log(this.state.myProps)
+    this.handleCLick = this.handleCLick.bind(this)
 
+
+  }
+  handleCLick(){
+    console.log(this.state.myProps)
+
+  }
   render() {
+
     return ( 
-      <div className="col-lg-4 col-md-6 mb-4">
+      <div className="col-lg-4 col-md-6 mb-4"   onClick={this.handleCLick}>
         <div className="card h-100">
           <a href="#"><img className="card-img-top" src="http://placehold.it/700x400" alt=""></img></a>
           <div className="card-body">
