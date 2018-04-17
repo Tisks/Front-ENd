@@ -3,8 +3,6 @@ import logo from './logo.svg';
 import Axios from 'axios'
 import ProductList from './ProductList/ProductList'
 import './App.css';
-import { BrowserRouter as Router } from 'react-router'
-import Route from 'react-router-dom/Route'
 
 /*
   
@@ -88,7 +86,7 @@ ReactDOM.render(
             render(){
               console.log(this.props)
                 return(
-                  <div  class="text-center">
+                  <div  className="text-center">
                     <h1>Agregar Producto</h1>
           
                       <label>Nombre del producto</label>  
@@ -139,10 +137,10 @@ ReactDOM.render(
           
           
           
-          /*class ComponentC extends Component{
-            constructor(){
-              super();
-              this.state ={
+          class ComponentC extends Component{
+            constructor(props){
+              super(props);
+             this.state ={
                 nombreProducto:"",
                 fechaVencimiento:"",
                 categoriaProducto:"",
@@ -151,9 +149,8 @@ ReactDOM.render(
             }
           
             render(){
-              console.log(this.props)
                 return(
-                  <div  class="text-center">
+                  <div  className="text-center">
                     <h1>Editar Producto</h1>
           
                       <label>Nombre del producto</label>  
@@ -167,7 +164,7 @@ ReactDOM.render(
                         </select> 
                       </ul>
                      <label>Precio</label>  
-                      <ul> <input type="number" min="159" max="20990" defaultvalue="4999" value={this.state.precioProducto} onChange={this.updatePrecioP.bind(this)} /> </ul>
+                      <ul> <input type="number" min="159" max="20990" defaultValue="4999" value={this.state.precioProducto} onChange={this.updatePrecioP.bind(this)} /> </ul>
           
                       <div>
                         <button onClick={this.agregarProducto.bind(this)} className="btn btn-primary"  > Agregar </button>
@@ -200,7 +197,7 @@ ReactDOM.render(
             agregarProducto(){
               alert('Producto agregado ' + this.state.nombreProducto);
             }
-          }*/
+          }
 
 class App extends Component {
 
@@ -284,8 +281,12 @@ class App extends Component {
             // console.log(this.state.color2);
 
     }
-    loadAgregarEditar = () => {
-      this.setState({view: "AgregarEditar"});
+    loadAgregar = () => {
+      this.setState({view: "Agregar"});
+    }
+
+    loadEditar= () => {
+      this.setState({view: "Editar"});
     }
 
     handleChangeColor = () => {
@@ -305,7 +306,9 @@ class App extends Component {
     }
 
     render() {
-      if (this.state.view === "AgregarEditar") return  <ComponentB color={this.state.color} /> ;
+      if (this.state.view === "Agregar") return  <ComponentB  color={this.state.color} /> ;
+      if (this.state.view === "Editar") return  <ComponentC color={this.state.color} /> ;
+
         return ( 
         <div className = "App" >
 
@@ -344,8 +347,8 @@ class App extends Component {
                 <div className="col-lg-3">        
                   <h1 className="my-4">Shop Name</h1>
                   <ul>
-                  <input type="button"  className="btn btn-primary" value="Agregar" onClick = {this.loadAgregarEditar}></input>
-                  <input type="button"  className="btn btn-warning" value="Editar"></input>                      
+                  <input type="button"  className="btn btn-primary" value="Agregar" onClick = {this.loadAgregar}></input>
+                  <input type="button"  className="btn btn-warning" value="Editar" onClick = {this.loadEditar}></input>                      
                   </ul>
                   <ul>
                   <input type="button"  className="btn btn-danger" value="Eliminar"></input>   
@@ -355,7 +358,7 @@ class App extends Component {
         
               
         
-                <div class="col-lg-9">
+                <div className="col-lg-9">
 
 
                   <div className="row">
