@@ -263,11 +263,21 @@ class App extends Component {
             }
         ]
     }
+    changeToSTring= () => {
+      console.log(this.state.products)
 
-    fetchFilms() {
-        console.log(this.state.films);
+    }
+    fetchProducts() {
+       Axios.get('http://138.197.105.209:2323/app/products/list')
+            .then(response => {
+                this.setState({ products: response.data });
+                this.changeToSTring()
+            })
+            .catch(function(error) {
+                console.log(error)
+            })
 
-        Axios.get('https://ghibliapi.herokuapp.com/films')
+        /*Axios.get('https://ghibliapi.herokuapp.com/films')
             .then(response => {
                 console.log(this.state.jsons);
                 this.setState({ products: this.state.jsons });
@@ -275,7 +285,7 @@ class App extends Component {
             })
             .catch(function(error) {
                 console.log(error)
-            })
+            })*/
             // console.log(this.state.color2)
             //this.setState({ color2: this.state.color });
             // console.log(this.state.color2);
@@ -300,7 +310,7 @@ class App extends Component {
         }
     }
     componentDidMount() {
-        this.fetchFilms()
+        this.fetchProducts()
     }
     componentWillUnmount() {
     }

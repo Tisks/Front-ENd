@@ -41,10 +41,19 @@ class Product extends Component {
 
 
   }
+
+  numToString(){
+
+
+  }
+
   handleCLick(){
     console.log(this.state.myProps)
 
   }
+  componentDidMount() {
+    this.numToString()
+}
   render() {
 
     return ( 
@@ -53,11 +62,11 @@ class Product extends Component {
           <a href="#"><img className="card-img-top" src="http://placehold.it/700x400" alt=""></img></a>
           <div className="card-body">
             <h4 className="card-title">
-              <a href="#">{this.props.nombre}</a>
+              <a href="#">{this.props.name}</a>
             </h4>
-            <h5>{this.props.precio}</h5>
-            <h5>{this.props.fechaVencimiento}</h5>
-            <p className="card-text">{this.props.categoria}</p>
+            <h5>{this.props.price}</h5>
+            <h5>Deberia existir esto </h5>
+            <p className="card-text">{this.props.category}</p>
           </div>
           <div className="card-footer">
                   <small className="text-muted">&#9733; &#9733; &#9733; &#9733; &#9734;</small>

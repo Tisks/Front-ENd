@@ -12,12 +12,13 @@ class ProductList extends Component {
   getKey(){
     return this.keyCount++;
   }
+  //fechaVencimiento={product.fechaVencimiento} 
     buildProduct(){
         return this.props.products.map((product) => {
           return(
-            <Product key={this.getKey()} nombre={product.nombre} 
-            fechaVencimiento={product.fechaVencimiento} categoria={product.categoria} 
-            precio={product.precio}  />
+            <Product key={this.getKey()} name={product.name} 
+            category={product.category} 
+            price={product.price}  />
           )
         })
       }
