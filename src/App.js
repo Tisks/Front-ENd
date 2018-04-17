@@ -72,6 +72,23 @@ ReactDOM.render(
                 console.log(error)
             })
             */
+
+class ComponentB extends Component{
+  render(){
+    console.log(this.props)
+      return(
+          <h1>hola</h1>
+
+      );
+
+  }
+
+
+}
+
+
+
+
 class App extends Component {
 
 
@@ -80,6 +97,7 @@ class App extends Component {
         products: [],
         color: 'aquamarine',
         color2: 'red',
+        view: '',
 
 
         setter: false,
@@ -151,6 +169,9 @@ class App extends Component {
             // console.log(this.state.color2);
 
     }
+    loadAgregarEditar = () => {
+      this.setState({view: "AgregarEditar"});
+    }
 
     handleChangeColor = () => {
         if (this.state.setter === false) {
@@ -168,6 +189,8 @@ class App extends Component {
     }
 
     render() {
+      if (this.state.view === "AgregarEditar") return  <ComponentB color={this.state.color} /> ;
+      if (this.state.view === "department") return <div > apple </div>;
         return ( 
         <div className = "App" >
 
@@ -202,16 +225,17 @@ class App extends Component {
         
               <div className="row">
         
-                <div className="col-lg-3">
-        
+                <div className="col-lg-3">        
                   <h1 className="my-4">Shop Name</h1>
-                  <div className="list-group">
-                    <a href="#" className="list-group-item">Category 1</a>
-                    <a href="#" className="list-group-item">Category 2</a>
-                    <a href="#" className="list-group-item">Category 3</a>
-                  </div>
-        
+                  <tr>
+                  <input type="button"  className="btn btn-primary" value="Agregar" onClick = {this.loadAgregarEditar}></input>
+                  <input type="button"  className="btn btn-warning" value="Editar"></input>                      
+                  </tr>  
+                  <tr>
+                  <input type="button"  className="btn btn-danger" value="Eliminar"></input>   
+                  </tr>        
                 </div>
+                
         
               
         
