@@ -361,29 +361,11 @@ class App extends Component {
 
             <nav className="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
               <div className="container">
-                <a className="navbar-brand" href="#">Start Bootstrap</a>
+                <a className="navbar-brand" href="#">Dable</a>
                 <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" 
                       aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
                   <span className="navbar-toggler-icon"></span>
                 </button>
-                <div className="collapse navbar-collapse" id="navbarResponsive">
-                  <ul className="navbar-nav ml-auto">
-                    <li className="nav-item active">
-                      <a className="nav-link" href="#">Home
-                        <span className="sr-only">(current)</span>
-                      </a>
-                    </li>
-                    <li className="nav-item">
-                      <a className="nav-link" href="#">About</a>
-                    </li>
-                    <li className="nav-item">
-                      <a className="nav-link" href="#">Services</a>
-                    </li>
-                    <li className="nav-item">
-                      <a className="nav-link" href="#">Contact</a>
-                    </li>
-                  </ul>
-                </div>
               </div>
             </nav>
         
@@ -392,7 +374,7 @@ class App extends Component {
               <div className="row">
         
                 <div className="col-lg-3">        
-                  <h1 className="my-4">Shop Name</h1>
+                  <h1 className="my-4">Productos</h1>
                   <ul>
                   <input type="button"  className="btn btn-primary" value="Agregar" onClick = {this.loadAgregar}></input>
                   <input type="button"  className="btn btn-warning" value="Editar" onClick = {this.loadEditar}></input>                      
