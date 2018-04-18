@@ -88,7 +88,7 @@ ReactDOM.render(
           
             render(){
               console.log(this.props)
-              if (this.state.view === "Cancelar") return  <App  color={this.state.color} /> ;
+              if (this.state.view === "Cancelar") return  <App  /> ;
                 
                 return(
                   <div  className="text-center">
@@ -122,8 +122,7 @@ ReactDOM.render(
           
                       <div>
                        <button onClick={this.agregarProducto.bind(this)} className="btn btn-primary"  > Agregar</button>
-                        
-                        <input type="button"  className="btn btn-danger" value="Cancelar" onClick = {this.loadCancelar}></input>
+                       <input type="button"  className="btn btn-danger" value="Cancelar" onClick = {this.loadCancelar}></input>  
                       </div>
                   </div>
                 );
@@ -172,6 +171,7 @@ ReactDOM.render(
             }
           
             render(){
+              if (this.state.view === "Cancelar") return  <App  /> ;
                 return(
                   <div  className="text-center">
                     <nav className="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
@@ -204,7 +204,7 @@ ReactDOM.render(
           
 
                       <div>
-                        <button onClick={this.agregarProducto.bind(this)} className="btn btn-primary"  > Agregar </button>
+                        <button onClick={this.agregarProducto.bind(this)} className="btn btn-primary"  > Editar </button>
                         <input type="button"  className="btn btn-danger" value="Cancelar" onClick = {this.loadCancelar}></input>
                       </div>
                   </div>
