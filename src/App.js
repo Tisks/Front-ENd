@@ -82,11 +82,29 @@ ReactDOM.render(
                 precioProducto:"",
               }
             }
+            loadCancelar = () => {
+              this.setState({view: "Cancelar"});
+            }
           
             render(){
               console.log(this.props)
+              if (this.state.view === "Cancelar") return  <App  color={this.state.color} /> ;
+                
                 return(
                   <div  className="text-center">
+                    <nav className="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+                      <div className="container">
+                        <a className="navbar-brand" href="http://localhost:3000/">Dable</a>
+                        <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" 
+                        aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+                        <span className="navbar-toggler-icon"></span>
+                        </button>
+                        <div className="collapse navbar-collapse" id="navbarResponsive">
+                          <ul className="navbar-nav ml-auto">
+                          </ul>
+                        </div>
+                      </div>
+                    </nav>                  
                     <h1>Agregar Producto</h1>
           
                       <label>Nombre del producto</label>  
@@ -103,8 +121,9 @@ ReactDOM.render(
                       <ul> <input type="number" min="159" max="20990" defaultValue="4999" value={this.state.precioProducto} onChange={this.updatePrecioP.bind(this)} /> </ul>
           
                       <div>
-                        <button onClick={this.agregarProducto.bind(this)} className="btn btn-primary"  > Agregar </button>
-                        <button onClick={this.resetForm} type="button" className="btn btn-danger"> Cancelar </button>
+                       <button onClick={this.agregarProducto.bind(this)} className="btn btn-primary"  > Agregar</button>
+                        
+                        <input type="button"  className="btn btn-danger" value="Cancelar" onClick = {this.loadCancelar}></input>
                       </div>
                   </div>
                 );
@@ -147,10 +166,27 @@ ReactDOM.render(
                 precioProducto:"",
               }
             }
+
+            loadCancelar = () => {
+              this.setState({view: "Cancelar"});
+            }
           
             render(){
                 return(
                   <div  className="text-center">
+                    <nav className="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+                      <div className="container">
+                        <a className="navbar-brand" href="http://localhost:3000/">Dable</a>
+                        <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" 
+                        aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+                        <span className="navbar-toggler-icon"></span>
+                        </button>
+                        <div className="collapse navbar-collapse" id="navbarResponsive">
+                          <ul className="navbar-nav ml-auto">
+                          </ul>
+                        </div>
+                      </div>
+                    </nav>
                     <h1>Editar Producto</h1>
           
                       <label>Nombre del producto</label>  
@@ -166,9 +202,10 @@ ReactDOM.render(
                      <label>Precio</label>  
                       <ul> <input type="number" min="159" max="20990" defaultValue="4999" value={this.state.precioProducto} onChange={this.updatePrecioP.bind(this)} /> </ul>
           
+
                       <div>
                         <button onClick={this.agregarProducto.bind(this)} className="btn btn-primary"  > Agregar </button>
-                        <button onClick={this.resetForm} type="button" className="btn btn-danger"> Cancelar </button>
+                        <input type="button"  className="btn btn-danger" value="Cancelar" onClick = {this.loadCancelar}></input>
                       </div>
                   </div>
                 );
