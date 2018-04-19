@@ -401,10 +401,11 @@ class App extends React.Component {
                 "Access-Control-Allow-Origin": "@crossorigin",
             }
           };   
-          Axios.put('http://138.197.105.209:2323/app/products/delete/'+(this.state.propProduct.id).toString(),axiosConfig)
+          Axios.delete('http://138.197.105.209:2323/app/products/delete/'+(this.state.propProduct.id).toString(),axiosConfig)
             .then((res) => {
                 console.log("RESPONSE RECEIVED: ", res);
                 alert('Producto editado ' + this.state.nombreProducto);
+                this.loadCancelar();
 
               })
             .catch((err) => {
@@ -448,16 +449,16 @@ class App extends React.Component {
 
     }
     fetchProducts() {
-      /* Axios.get('http://138.197.105.209:2323/app/products/list')
+      Axios.get('http://138.197.105.209:2323/app/products/list')
             .then(response => {
                 this.setState({ products: response.data });
                 this.changeToSTring()
             })
             .catch(function(error) {
                 console.log(error)
-            })*/
+            })
 
-        Axios.get('https://ghibliapi.herokuapp.com/films')
+       /* Axios.get('https://ghibliapi.herokuapp.com/films')
             .then(response => {
                 console.log(this.state.jsons);
                 this.setState({ products: this.state.jsons });
@@ -465,7 +466,7 @@ class App extends React.Component {
             })
             .catch(function(error) {
                 console.log(error)
-            })
+            })*/
             // console.log(this.state.color2)
             //this.setState({ color2: this.state.color });
             // console.log(this.state.color2);

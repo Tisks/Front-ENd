@@ -61,9 +61,7 @@ class Product extends Component {
             <h5>Deberia existir esto </h5>
             <p className="card-text">{this.props.category}</p>
           </div>
-          <div className="card-footer">
-                  <small className="text-muted">&#9733; &#9733; &#9733; &#9733; &#9734;</small>
-           </div>
+         
         </div>
         </div>
 
