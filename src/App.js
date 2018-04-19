@@ -101,7 +101,7 @@ ReactDOM.render(
                   <div  className="text-center">
                     <nav className="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
                       <div className="container">
-                        <a className="navbar-brand" href="http://localhost:3000/">Dable</a>
+                        <a className="navbar-brand" href="#" onClick = {this.loadCancelar}>Dable</a>
                         <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" 
                         aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
                         <span className="navbar-toggler-icon"></span>
@@ -112,7 +112,7 @@ ReactDOM.render(
                         </div>
                       </div>
                     </nav>                  
-                    <h1 class="aa">Agregar Producto</h1>
+                    <h1 className="aa">Agregar Producto</h1>
           
                       <label>Nombre del producto</label>  
                       <ul><input type="text" value={this.state.nombreProducto} onChange={this.updateNombreP.bind(this)} required="required" /> </ul>
@@ -125,21 +125,21 @@ ReactDOM.render(
                       <ul> <input type="date" value={this.state.fechaVencimiento} onChange={this.updateFechaV.bind(this)} required="required" /> </ul>
                       <label>Categoría</label>  
                       <ul><select selected={this.state.categoriaProducto} onClick={this.updateCategoriaP.bind(this)} required="required">
-                          <option selected ="nacional">Nacional</option>
-                          <option selected ="internacional">Internacional</option>
+                          <option value ="nacional">nacional</option>
+                          <option value ="importada">importada</option>
                         </select> 
                       </ul>
                      <label>Precio</label>  
-                      <ul> <input type="number" min="159" max="20990" Value="4990" value={this.state.precioProducto} onChange={this.updatePrecioP.bind(this)} required="required"/> </ul>
-                      <div class="container">
-                        <div class="row justify-content-md-center">
-                          <div class="col col-lg-2">
+                      <ul> <input type="number" min="159" max="20990"  value={this.state.precioProducto} onChange={this.updatePrecioP.bind(this)} required="required"/> </ul>
+                      <div className="container">
+                        <div className="row justify-content-md-center">
+                          <div className="col col-lg-2">
 
 
 
                            <button onClick={this.agregarProducto.bind(this)} className="btn btn-primary"> Agregar</button>
                           </div>
-                          <div class="col col-lg-2">
+                          <div className="col col-lg-2">
                            <input type="button"  className="btn btn-danger" value="Cancelar" onClick = {this.loadCancelar}></input>  
                           </div>
                         </div>
@@ -205,7 +205,8 @@ ReactDOM.render(
                     console.log("AXIOS ERROR: ", err);
                   })
 
-              }else{
+              }
+              else{
                 alert('Debes completar todos los campos');
               }
             
@@ -213,27 +214,6 @@ ReactDOM.render(
           }
           
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-          
-          
           class AppEditar extends Component{
             constructor(props){
               super(props);
@@ -246,6 +226,7 @@ ReactDOM.render(
                 precioProducto:"",
               }
             }
+            
 
             loadCancelar = () => {
               this.setState({view: "Cancelar"});
@@ -257,7 +238,7 @@ ReactDOM.render(
                   <div  className="text-center">
                     <nav className="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
                       <div className="container">
-                        <a className="navbar-brand" href="http://localhost:3000/">Dable</a>
+                        <a className="navbar-brand" href="#" onClick = {this.loadCancelar}>Dable</a>
                         <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" 
                         aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
                         <span className="navbar-toggler-icon"></span>
@@ -268,7 +249,7 @@ ReactDOM.render(
                         </div>
                       </div>
                     </nav>
-                    <h1 class="aa">Editar Producto</h1>
+                    <h1 className="aa">Editar Producto</h1>
           
                       <label>Nombre del producto</label>  
                       <ul><input type="text" value={this.state.nombreProducto} onChange={this.updateNombreP.bind(this)} /> </ul>
@@ -281,13 +262,13 @@ ReactDOM.render(
                         </select> 
                       </ul>
                       <label>Precio</label>  
-                      <ul> <input type="number" min="159" max="20990" defaultValue="4999" value={this.state.precioProducto} onChange={this.updatePrecioP.bind(this)} /> </ul>
-                      <div class="container">                      
-                        <div class="row justify-content-md-center">
-                          <div class="col col-lg-2">
+                      <ul> <input type="number" min="159" max="20990"  value={this.state.precioProducto} onChange={this.updatePrecioP.bind(this)} /> </ul>
+                      <div className="container">                      
+                        <div className="row justify-content-md-center">
+                          <div className="col col-lg-2">
                             <button onClick={this.editarProducto.bind(this)} className="btn btn-primary"  > Editar </button>
                           </div>
-                          <div class="col col-lg-2">
+                          <div className="col col-lg-2">
                             <input type="button"  className="btn btn-danger" value="Cancelar" onClick = {this.loadCancelar}></input>
                           </div>
                         </div>
@@ -365,6 +346,7 @@ class App extends React.Component {
         color2: 'red',
         view: '',
         producto:[],
+        propProduct: [],
 
 
         setter: false,
@@ -420,25 +402,25 @@ class App extends React.Component {
     }
 
     productDelete = () =>{
-      if(this.state.propProduct.lenght !== 0){
-        let axiosConfig = {
-          headers: {
-              'Content-Type': 'application/json;charset=UTF-8',
-              "Access-Control-Allow-Origin": "@crossorigin",
-          }
-        };   
-        Axios.put('http://138.197.105.209:2323/app/products/delete/'+(this.state.propProduct.id).toString(),axiosConfig)
-           .then((res) => {
-              console.log("RESPONSE RECEIVED: ", res);
-               alert('Producto editado ' + this.state.nombreProducto);
+        
+          let axiosConfig = {
+            headers: {
+                'Content-Type': 'application/json;charset=UTF-8',
+                "Access-Control-Allow-Origin": "@crossorigin",
+            }
+          };   
+          Axios.put('http://138.197.105.209:2323/app/products/delete/'+(this.state.propProduct.id).toString(),axiosConfig)
+            .then((res) => {
+                console.log("RESPONSE RECEIVED: ", res);
+                alert('Producto editado ' + this.state.nombreProducto);
 
-            })
-           .catch((err) => {
-              console.log("AXIOS ERROR: ", err);
-             })
-          
+              })
+            .catch((err) => {
+                console.log("AXIOS ERROR: ", err);
+              })
+            
 
-      }
+
       }
       handleCLickIdentify= (jsons) =>{
 
@@ -452,7 +434,12 @@ class App extends React.Component {
     }
 
     onOpenModal = () => {
-      this.setState({ open: true });
+      if(this.state.propProduct.lenght > 0){
+        this.setState({ open: true });
+      }
+      else{
+        alert('No se ha seleccionado ningun item para eliminar, seleccione uno para poder eliminarlo');
+      }
     };
    
     onCloseModal = () => {
@@ -514,6 +501,10 @@ class App extends React.Component {
     componentWillUnmount() {
     }
 
+    loadNullify = (estado) => {
+      this.setState({estado: ""});
+    }
+
 
     loadCancelar = () => {
               this.setState({view: "Cancelar"});
@@ -530,7 +521,16 @@ class App extends React.Component {
 
       if (this.state.view === "Cancelar") return  <App  /> ;
       if (this.state.view === "Agregar") return  <AppAgregar /> ;
-      if (this.state.view === "Editar") return  <AppEditar /> ;
+      if (this.state.view === "Editar"){
+        console.log(this.state.propProduct)
+        if(this.state.propProduct.lenght > 0){
+          return  <AppEditar products= {this.state.propProduct} /> ;
+        }
+        else{
+          alert('No se ha seleccionado ningun item para editar, seleccione uno para poder editarlo');
+        }
+
+      }
 
         return ( 
         <div className = "App" >
@@ -550,18 +550,18 @@ class App extends React.Component {
               <div className="row">
         
                 <div className="col-lg-6">        
-                  <h1 className="my-4 " class="bb">Productos</h1>
-                  <div class="row">
-                    <div class="col col-lg-2">
+                  <h1 className="my-4 " className="bb">Productos</h1>
+                  <div className="row">
+                    <div className="col col-lg-2">
                       <input type="button"  className="btn btn-primary" value="Agregar" onClick = {this.loadAgregar}></input>
                     </div>
-                    <div class="col col-lg-2">
+                    <div className="col col-lg-2">
                       <input type="button"  className="btn btn-warning" value="Editar" onClick = {this.loadEditar}></input>                      
                     </div>
                   </div>
                   <br></br>
-                  <div class="row" className="text-center">
-                    <div class="col col-lg-4" >
+                  <div className="row" className="text-center">
+                    <div className="col col-lg-4" >
                       <div>
                         <input type="button"  className="btn btn-danger" value="Eliminar" onClick = {this.onOpenModal}></input>
                         <Modal open={open} onClose={this.onCloseModal} little >
@@ -569,11 +569,11 @@ class App extends React.Component {
                           <p>
                             ¿Esta seguro que desea eliminar el producto?
                           </p>
-                          <div class="row">
-                            <div class="col col-lg-6">
+                          <div className="row">
+                            <div className="col col-lg-6">
                               <input type="button"  className="btn btn-primary" value="Cancelar" onClick = {this.loadCancelar}></input>
                             </div>
-                            <div class="col col-lg-6">
+                            <div className="col col-lg-6">
                               <input type="button"  className="btn btn-danger" value="Confirmar" onClick = {this.productDelete}></input>
                             </div>
                           </div>
