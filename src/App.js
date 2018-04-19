@@ -375,7 +375,21 @@ class App extends React.Component {
                 "category": "nacional",
                 "price": 5666
 
-            }
+            },
+            {
+              "name": "vaso plastico",
+              "fechaVencimiento": "ojala nuncax2",
+              "category": "importada",
+              "price": 1500
+
+          },
+          {
+            "name": "vaso plastico",
+            "fechaVencimiento": "ojala nuncax2",
+            "category": "importada",
+            "price": 1500
+
+        },
         ]
     }
 
@@ -546,21 +560,21 @@ class App extends React.Component {
         
               <div className="row">
         
-                <div className="col-lg-6">        
+                <div className="col-lg-3">        
                   <h1 className="my-4 " className="bb">Productos</h1>
                   <div className="row">
-                    <div className="col col-lg-2">
+                    <ul>
                       <input type="button"  className="btn btn-primary" value="Agregar" onClick = {this.loadAgregar}></input>
-                    </div>
-                    <div className="col col-lg-2">
                       <input type="button"  className="btn btn-warning" value="Editar" onClick = {this.loadEditar}></input>                      
-                    </div>
+                    </ul>
                   </div>
                   <br></br>
                   <div className="row" className="text-center">
                     <div className="col col-lg-4" >
                       <div>
+                        <ul>
                         <input type="button"  className="btn btn-danger" value="Eliminar" onClick = {this.onOpenModal}></input>
+                        </ul>
                         <Modal open={open} onClose={this.onCloseModal} little >
                           <h2>Eliminar producto</h2>
                           <p>
@@ -590,13 +604,12 @@ class App extends React.Component {
               </div>
         
             </div>
-            <div>  
               <footer className="py-5 bg-dark">
                 <div className="container">
                   <p className="m-0 text-center text-white">¡Gracias por su visita!</p>
                 </div>
               </footer>
-            </div>
+           
         </div>
         );
     }
