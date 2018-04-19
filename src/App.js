@@ -78,14 +78,15 @@ ReactDOM.render(
             */
 
 
-           class ComponentB extends Component{
-            constructor(){
-              super();
+           class AppAgregar extends Component{
+            constructor(props){
+              super(props);
               this.state ={
                 nombreProducto:"",
                 fechaVencimiento:"",
                 categoriaProducto:"",
                 precioProducto:"",
+                view:""
               }
             }
             loadCancelar = () => {
@@ -111,24 +112,32 @@ ReactDOM.render(
                         </div>
                       </div>
                     </nav>                  
-                    <h1>Agregar Producto</h1>
+                    <h1 class="aa">Agregar Producto</h1>
           
                       <label>Nombre del producto</label>  
                       <ul><input type="text" value={this.state.nombreProducto} onChange={this.updateNombreP.bind(this)} required="required" /> </ul>
+                      
+
+
+
+
                       <label>Fecha de vencimiento</label>  
-                      <ul> <input type="date" value={this.state.fechaVencimiento} onChange={this.updateFechaV.bind(this)} required /> </ul>
+                      <ul> <input type="date" value={this.state.fechaVencimiento} onChange={this.updateFechaV.bind(this)} required="required" /> </ul>
                       <label>Categoría</label>  
-                      <ul><select value={this.state.categoriaProducto} onChange={this.updateCategoriaP.bind(this)} required>
-                          <option value="nacional">Nacional</option>
-                          <option value="internacional">Internacional</option>
+                      <ul><select selected={this.state.categoriaProducto} onClick={this.updateCategoriaP.bind(this)} required="required">
+                          <option selected ="nacional">Nacional</option>
+                          <option selected ="internacional">Internacional</option>
                         </select> 
                       </ul>
                      <label>Precio</label>  
-                      <ul> <input type="number" min="159" max="20990" Value="4990" value={this.state.precioProducto} onChange={this.updatePrecioP.bind(this)} required/> </ul>
+                      <ul> <input type="number" min="159" max="20990" Value="4990" value={this.state.precioProducto} onChange={this.updatePrecioP.bind(this)} required="required"/> </ul>
                       <div class="container">
                         <div class="row justify-content-md-center">
                           <div class="col col-lg-2">
-                           <button onClick={this.agregarProducto.bind(this)} className="btn btn-primary"  > Agregar</button>
+
+
+
+                           <button onClick={this.agregarProducto.bind(this)} className="btn btn-primary"> Agregar</button>
                           </div>
                           <div class="col col-lg-2">
                            <input type="button"  className="btn btn-danger" value="Cancelar" onClick = {this.loadCancelar}></input>  
@@ -147,7 +156,7 @@ ReactDOM.render(
                  
                 );
             }
-          
+           
             updateNombreP(event){
               this.setState({
                 nombreProducto: event.target.value
@@ -160,7 +169,7 @@ ReactDOM.render(
             }
             updateCategoriaP(event){
               this.setState({
-                categoriaProducto: event.target.value
+                categoriaProducto: event.target.selected
               });
             }
             updatePrecioP(event){
@@ -169,16 +178,68 @@ ReactDOM.render(
               });
             }
             agregarProducto(){
-              alert('Producto agregado ' + this.state.nombreProducto);
+
+              if(this.state.nombreProducto, this.state.fechaVencimiento , this.state.categoriaProducto,this.state.precioProducto){
+                alert('Producto agregado ' + this.state.nombreProducto + ' ' + this.state.fechaVencimiento + ' ' + this.state.categoriaProducto + ' ' +  this.state.precioProducto);
+                      
+              let axiosConfig = {
+                headers: {
+                    'Content-Type': 'application/json;charset=UTF-8',
+                    "Access-Control-Allow-Origin": "@crossorigin",
+                }
+              };             
+              const jsonAgregar ={
+                name: this.state.nombreProducto,
+                category: this.state.categoryProducto,
+                price: parseInt(this.state.precioProducto)
+              };
+    
+         
+              Axios.post('http://138.197.105.209:2323/app/products/create', jsonAgregar, axiosConfig)
+                  .then((res) => {
+                    console.log("RESPONSE RECEIVED: ", res);
+                    alert('Producto agregado ' + this.state.nombreProducto);
+
+                  })
+                  .catch((err) => {
+                    console.log("AXIOS ERROR: ", err);
+                  })
+
+              }else{
+                alert('Debes completar todos los campos');
+              }
+            
             }
           }
           
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
           
           
-          class ComponentC extends Component{
+          class AppEditar extends Component{
             constructor(props){
               super(props);
-             this.state ={
+              console.log(this.props.products.name)
+              console.log(this.props.products.category)
+              this.state ={
                 nombreProducto:"",
                 fechaVencimiento:"",
                 categoriaProducto:"",
@@ -207,7 +268,7 @@ ReactDOM.render(
                         </div>
                       </div>
                     </nav>
-                    <h1>Editar Producto</h1>
+                    <h1 class="aa">Editar Producto</h1>
           
                       <label>Nombre del producto</label>  
                       <ul><input type="text" value={this.state.nombreProducto} onChange={this.updateNombreP.bind(this)} /> </ul>
@@ -224,7 +285,7 @@ ReactDOM.render(
                       <div class="container">                      
                         <div class="row justify-content-md-center">
                           <div class="col col-lg-2">
-                            <button onClick={this.agregarProducto.bind(this)} className="btn btn-primary"  > Editar </button>
+                            <button onClick={this.editarProducto.bind(this)} className="btn btn-primary"  > Editar </button>
                           </div>
                           <div class="col col-lg-2">
                             <input type="button"  className="btn btn-danger" value="Cancelar" onClick = {this.loadCancelar}></input>
@@ -261,14 +322,39 @@ ReactDOM.render(
                 precioProducto: event.target.value
               });
             }
-            agregarProducto(){
-              alert('Producto editado ' + this.state.nombreProducto);
+            editarProducto(){
+              let axiosConfig = {
+                headers: {
+                    'Content-Type': 'application/json;charset=UTF-8',
+                    "Access-Control-Allow-Origin": "@crossorigin",
+                }
+              };             
+              const jsonEdicion ={
+                name: this.state.nombreProducto,
+                category: this.state.categoryProducto,
+                price: parseInt(this.state.precioProducto)
+              };
+
+              Axios.put('http://138.197.105.209:2323/app/products/edit/'+(this.props.products.id).toString(), jsonEdicion, axiosConfig)
+              .then((res) => {
+                console.log("RESPONSE RECEIVED: ", res);
+                alert('Producto editado ' + this.state.nombreProducto);
+
+              })
+              .catch((err) => {
+                console.log("AXIOS ERROR: ", err);
+              })
+
             }
           }
 
 class App extends React.Component {
 
+    constructor( props ) {
+    super( props );
 
+    this.handleCLickIdentify = this.handleCLickIdentify.bind(this)
+    }
 
     state = {
        open:false,
@@ -331,6 +417,38 @@ class App extends React.Component {
 
             }
         ]
+    }
+
+    productDelete = () =>{
+      if(this.state.propProduct.lenght !== 0){
+        let axiosConfig = {
+          headers: {
+              'Content-Type': 'application/json;charset=UTF-8',
+              "Access-Control-Allow-Origin": "@crossorigin",
+          }
+        };   
+        Axios.put('http://138.197.105.209:2323/app/products/delete/'+(this.state.propProduct.id).toString(),axiosConfig)
+           .then((res) => {
+              console.log("RESPONSE RECEIVED: ", res);
+               alert('Producto editado ' + this.state.nombreProducto);
+
+            })
+           .catch((err) => {
+              console.log("AXIOS ERROR: ", err);
+             })
+          
+
+      }
+      }
+      handleCLickIdentify= (jsons) =>{
+
+      this.setState({
+        propProduct: jsons
+      })
+      console.log(jsons)
+      console.log(this.state.propProduct)
+  
+  
     }
 
     onOpenModal = () => {
@@ -411,15 +529,15 @@ class App extends React.Component {
       const { open } = this.state;
 
       if (this.state.view === "Cancelar") return  <App  /> ;
-      if (this.state.view === "Agregar") return  <ComponentB /> ;
-      if (this.state.view === "Editar") return  <ComponentC /> ;
+      if (this.state.view === "Agregar") return  <AppAgregar /> ;
+      if (this.state.view === "Editar") return  <AppEditar /> ;
 
         return ( 
         <div className = "App" >
 
             <nav className="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
               <div className="container">
-                <a className="navbar-brand" href="#">Dable</a>
+                <a className="navbar-brand" href="#" >Dable</a>
                 <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" 
                       aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
                   <span className="navbar-toggler-icon"></span>
@@ -432,7 +550,7 @@ class App extends React.Component {
               <div className="row">
         
                 <div className="col-lg-6">        
-                  <h1 className="my-4">Productos</h1>
+                  <h1 className="my-4 " class="bb">Productos</h1>
                   <div class="row">
                     <div class="col col-lg-2">
                       <input type="button"  className="btn btn-primary" value="Agregar" onClick = {this.loadAgregar}></input>
@@ -456,7 +574,7 @@ class App extends React.Component {
                               <input type="button"  className="btn btn-primary" value="Cancelar" onClick = {this.loadCancelar}></input>
                             </div>
                             <div class="col col-lg-6">
-                              <input type="button"  className="btn btn-danger" value="Confirmar" onClick = {this.loadEliminarProducto}></input>
+                              <input type="button"  className="btn btn-danger" value="Confirmar" onClick = {this.productDelete}></input>
                             </div>
                           </div>
                         </Modal>
