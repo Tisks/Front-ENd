@@ -373,31 +373,30 @@ class App extends Component {
         
               <div className="row">
         
-                <div className="col-lg-3">        
+                <div className="col-lg-6">        
                   <h1 className="my-4">Productos</h1>
-                  <ul>
-                  <input type="button"  className="btn btn-primary" value="Agregar" onClick = {this.loadAgregar}></input>
-                  <input type="button"  className="btn btn-warning" value="Editar" onClick = {this.loadEditar}></input>                      
-                  </ul>
-                  <ul>
-                  <input type="button"  className="btn btn-danger" value="Eliminar"></input>   
-                  </ul>       
+                  <div class="row">
+                    <div class="col col-lg-2">
+                      <input type="button"  className="btn btn-primary" value="Agregar" onClick = {this.loadAgregar}></input>
+                    </div>
+                    <div class="col col-lg-2">
+                      <input type="button"  className="btn btn-warning" value="Editar" onClick = {this.loadEditar}></input>                      
+                    </div>
+                  </div>
+                  <br></br>
+                  <div class="row" className="text-center">
+                    <div class="col col-lg-4" >
+                      <input type="button"  className="btn btn-danger" value="Eliminar"></input>   
+                    </div>      
+                  </div>
                 </div>
-              
-        
-              
+                       
         
                 <div className="col-lg-9">
-
-
                   <div className="row">
-                  <ProductList products = { this.state.products }
-                    /> 
-        
+                   <ProductList products = { this.state.products }/>
                   </div>
-        
-          
-                 </div>
+                </div>
         
               </div>
         
@@ -405,7 +404,7 @@ class App extends Component {
         
             <footer className="py-5 bg-dark">
               <div className="container">
-                <p className="m-0 text-center text-white">Copyright &copy; Your Website 2017</p>
+                <p className="m-0 text-center text-white">¡Gracias por su visita!</p>
               </div>
             </footer>
             
