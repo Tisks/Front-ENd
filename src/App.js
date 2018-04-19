@@ -62,7 +62,7 @@ ReactDOM.render(
         Nombre del producto
          Fecha de vencimiento
           Categoría (Importado, Nacional)
-          Precio+
+          price+
           
           
           
@@ -84,8 +84,8 @@ ReactDOM.render(
               this.state ={
                 nombreProducto:"",
                 fechaVencimiento:"",
-                categoriaProducto:"",
-                precioProducto:"",
+                categoryProducto:"",
+                priceProducto:"",
                 view:""
               }
             }
@@ -124,13 +124,13 @@ ReactDOM.render(
                       <label>Fecha de vencimiento</label>  
                       <ul> <input type="date" value={this.state.fechaVencimiento} onChange={this.updateFechaV.bind(this)} required="required" /> </ul>
                       <label>Categoría</label>  
-                      <ul><select selected={this.state.categoriaProducto} onClick={this.updateCategoriaP.bind(this)} required="required">
+                      <ul><select onClick={this.updatecategoryP.bind(this)} required="required">
                           <option value ="nacional">nacional</option>
                           <option value ="importada">importada</option>
                         </select> 
                       </ul>
-                     <label>Precio</label>  
-                      <ul> <input type="number" min="159" max="20990"  value={this.state.precioProducto} onChange={this.updatePrecioP.bind(this)} required="required"/> </ul>
+                     <label>price</label>  
+                      <ul> <input type="number" min="159" max="20990"  value={this.state.priceProducto} onChange={this.updatepriceP.bind(this)} required="required"/> </ul>
                       <div className="container">
                         <div className="row justify-content-md-center">
                           <div className="col col-lg-2">
@@ -167,20 +167,20 @@ ReactDOM.render(
                 fechaVencimiento: event.target.value
               });
             }
-            updateCategoriaP(event){
+            updatecategoryP(event){
               this.setState({
-                categoriaProducto: event.target.selected
+                categoryProducto: event.target.value
               });
             }
-            updatePrecioP(event){
+            updatepriceP(event){
               this.setState({
-                precioProducto: event.target.value
+                priceProducto: event.target.value
               });
             }
             agregarProducto(){
 
-              if(this.state.nombreProducto, this.state.fechaVencimiento , this.state.categoriaProducto,this.state.precioProducto){
-                alert('Producto agregado ' + this.state.nombreProducto + ' ' + this.state.fechaVencimiento + ' ' + this.state.categoriaProducto + ' ' +  this.state.precioProducto);
+              if(this.state.nombreProducto, this.state.fechaVencimiento , this.state.categoryProducto,this.state.priceProducto){
+                alert('Producto agregado ' + this.state.nombreProducto + ' ' + this.state.fechaVencimiento + ' ' + this.state.categoryProducto + ' ' +  this.state.priceProducto);
                       
               let axiosConfig = {
                 headers: {
@@ -191,7 +191,7 @@ ReactDOM.render(
               const jsonAgregar ={
                 name: this.state.nombreProducto,
                 category: this.state.categoryProducto,
-                price: parseInt(this.state.precioProducto)
+                price: parseInt(this.state.priceProducto)
               };
     
          
@@ -217,13 +217,11 @@ ReactDOM.render(
           class AppEditar extends Component{
             constructor(props){
               super(props);
+              console.log('Aqui estan los props')
               console.log(this.props.products.name)
               console.log(this.props.products.category)
               this.state ={
-                nombreProducto:"",
-                fechaVencimiento:"",
-                categoriaProducto:"",
-                precioProducto:"",
+                view: ""
               }
             }
             
@@ -252,17 +250,18 @@ ReactDOM.render(
                     <h1 className="aa">Editar Producto</h1>
           
                       <label>Nombre del producto</label>  
-                      <ul><input type="text" value={this.state.nombreProducto} onChange={this.updateNombreP.bind(this)} /> </ul>
+                      <ul><input type="text" value={this.props.products.name} onChange={this.updateNombreP.bind(this)} /> </ul>
                       <label>Fecha de vencimiento</label>  
-                      <ul> <input type="date" value={this.state.fechaVencimiento} onChange={this.updateFechaV.bind(this)} /> </ul>
+                      <ul> <input type="date" value={this.props.products.fechaVencimiento} onChange={this.updateFechaV.bind(this)} /> </ul>
                       <label>Categoría</label>  
-                      <ul><select value={this.state.categoriaProducto} onChange={this.updateCategoriaP.bind(this)}>
-                          <option value="nacional">Nacional</option>
-                          <option value="internacional">Internacional</option>
+                      <ul><select onChange={this.updatecategoryP.bind(this)}>
+                         <option selected hidden>{this.props.products.category} </option>
+                          <option value="nacional">nacional</option>
+                          <option value="internacional">importada</option>
                         </select> 
                       </ul>
-                      <label>Precio</label>  
-                      <ul> <input type="number" min="159" max="20990"  value={this.state.precioProducto} onChange={this.updatePrecioP.bind(this)} /> </ul>
+                      <label>price</label>  
+                      <ul> <input type="number" min="159" max="20990"  value={this.props.products.price} onChange={this.updatepriceP.bind(this)} /> </ul>
                       <div className="container">                      
                         <div className="row justify-content-md-center">
                           <div className="col col-lg-2">
@@ -293,14 +292,14 @@ ReactDOM.render(
                 fechaVencimiento: event.target.value
               });
             }
-            updateCategoriaP(event){
+            updatecategoryP(event){
               this.setState({
-                categoriaProducto: event.target.value
+                categoryProducto: event.target.value
               });
             }
-            updatePrecioP(event){
+            updatepriceP(event){
               this.setState({
-                precioProducto: event.target.value
+                priceProducto: event.target.value
               });
             }
             editarProducto(){
@@ -313,7 +312,7 @@ ReactDOM.render(
               const jsonEdicion ={
                 name: this.state.nombreProducto,
                 category: this.state.categoryProducto,
-                price: parseInt(this.state.precioProducto)
+                price: parseInt(this.state.priceProducto)
               };
 
               Axios.put('http://138.197.105.209:2323/app/products/edit/'+(this.props.products.id).toString(), jsonEdicion, axiosConfig)
@@ -332,9 +331,8 @@ ReactDOM.render(
 class App extends React.Component {
 
     constructor( props ) {
-    super( props );
-
-    this.handleCLickIdentify = this.handleCLickIdentify.bind(this)
+          super( props );
+          this.handleCLickIdentify = this.handleCLickIdentify.bind(this)
     }
 
     state = {
@@ -351,51 +349,31 @@ class App extends React.Component {
 
         setter: false,
         jsons: [{
-                "id": "2baf70d1-42bb-4437-b551-e5fed5a87abe",
-                "nombre": "Chela",
+                "name": "Chela",
                 "fechaVencimiento": "ojala nunca",
-                "categoria": "importada",
-                "precio": "luka"
+                "category": "importada",
+                "price": 1000
 
             },
             {
-                "id": "2baf70d1-4assa2bb-4437-b551-e5fed5a87abe",
-                "nombre": "agua",
+                "name": "agua",
                 "fechaVencimiento": "ojala nuncax4 ",
-                "categoria": "nacional",
-                "precio": "5666"
+                "category": "nacional",
+                "price": 5666
 
             },
             {
-                "id": "2baf7sdsd0d1-42bb-4437-b551-e5fed5a87abe",
-                "nombre": "vaso plastico",
+                "name": "vaso plastico",
                 "fechaVencimiento": "ojala nuncax2",
-                "categoria": "importada",
-                "precio": "muchas lukas"
+                "category": "importada",
+                "price": 1500
 
             },
             {
-                "id": "2baf70d1-4assa2bb-4437-b551-e5fed5a87abe",
-                "nombre": "agua",
+                "name": "agua",
                 "fechaVencimiento": "ojala nuncax4 ",
-                "categoria": "nacional",
-                "precio": "5666"
-
-            },
-            {
-                "id": "2baf70d1-4assa2bb-4437-b551-e5fed5a87abe",
-                "nombre": "agua",
-                "fechaVencimiento": "ojala nuncax4 ",
-                "categoria": "nacional",
-                "precio": "5666"
-
-            },
-            {
-                "id": "2baf70d1-4assa2bb-4437-b551-e5fed5a87abe",
-                "nombre": "agua",
-                "fechaVencimiento": "ojala nuncax4 ",
-                "categoria": "nacional",
-                "precio": "5666"
+                "category": "nacional",
+                "price": 5666
 
             }
         ]
@@ -423,18 +401,20 @@ class App extends React.Component {
 
       }
       handleCLickIdentify= (jsons) =>{
+        this.loadNullify(this.state.view);
 
       this.setState({
         propProduct: jsons
       })
       console.log(jsons)
       console.log(this.state.propProduct)
+      this.setState({view: ""})
   
   
     }
 
     onOpenModal = () => {
-      if(this.state.propProduct.lenght > 0){
+      if(!(this.isEmpty(this.state.propProduct))){ 
         this.setState({ open: true });
       }
       else{
@@ -454,16 +434,16 @@ class App extends React.Component {
 
     }
     fetchProducts() {
-       Axios.get('http://138.197.105.209:2323/app/products/list')
+      /* Axios.get('http://138.197.105.209:2323/app/products/list')
             .then(response => {
                 this.setState({ products: response.data });
                 this.changeToSTring()
             })
             .catch(function(error) {
                 console.log(error)
-            })
+            })*/
 
-        /*Axios.get('https://ghibliapi.herokuapp.com/films')
+        Axios.get('https://ghibliapi.herokuapp.com/films')
             .then(response => {
                 console.log(this.state.jsons);
                 this.setState({ products: this.state.jsons });
@@ -471,7 +451,7 @@ class App extends React.Component {
             })
             .catch(function(error) {
                 console.log(error)
-            })*/
+            })
             // console.log(this.state.color2)
             //this.setState({ color2: this.state.color });
             // console.log(this.state.color2);
@@ -497,22 +477,31 @@ class App extends React.Component {
     }
     componentDidMount() {
         this.fetchProducts()
+        document.addEventListener("mousedown", this.handleClickOutside);
+
     }
     componentWillUnmount() {
+      document.removeEventListener("mousedown", this.handleClickOutside);
+
     }
 
     loadNullify = (estado) => {
       this.setState({estado: ""});
     }
-
+   
+    /**
+     * Set the wrapper ref
+     */
 
     loadCancelar = () => {
               this.setState({view: "Cancelar"});
-            }
-
-    loadEliminarProducto = () => {
-              ///Eliminar Producto
-            }
+     }
+     isEmpty(arg) {
+      for (var item in arg) {
+        return false;
+      }
+      return true;
+    }
 
     render() {
 
@@ -522,8 +511,16 @@ class App extends React.Component {
       if (this.state.view === "Cancelar") return  <App  /> ;
       if (this.state.view === "Agregar") return  <AppAgregar /> ;
       if (this.state.view === "Editar"){
+        console.log('Esto es lo que hay adentro')
         console.log(this.state.propProduct)
-        if(this.state.propProduct.lenght > 0){
+        console.log('Este es el lenght')
+        console.log(this.state.propProduct.lenght)
+
+        if(!(this.isEmpty(this.state.propProduct))){
+          console.log('Pase por aqui')
+
+          console.log(this.state.propProduct)
+
           return  <AppEditar products= {this.state.propProduct} /> ;
         }
         else{
@@ -586,7 +583,7 @@ class App extends React.Component {
         
                 <div className="col-lg-9">
                   <div className="row">
-                   <ProductList products = { this.state.products }/>
+                   <ProductList products = { this.state.products } triggerApp = {this.handleCLickIdentify}/>
                   </div>
                 </div>
         
