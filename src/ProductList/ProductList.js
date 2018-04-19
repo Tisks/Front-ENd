@@ -2,13 +2,23 @@ import React, { Component } from 'react';
 import Product from './../Product/Product'
 
 class ProductList extends Component {
+  state = {
+    propProduct: []
+
+  }
+  
   constructor( props ) {
     super( props );
 
     this.keyCount = 0;
     this.getKey = this.getKey.bind(this);
+    //this.handleCLickApp = this.handleCLickApp.bind(this)
   }
- 
+ /* handleCLickApp(){
+      this.props.triggerApp()
+
+
+  }*/
   getKey(){
     return this.keyCount++;
   }
@@ -18,7 +28,7 @@ class ProductList extends Component {
           return(
             <Product key={this.getKey()} name={product.name} 
             category={product.category} 
-            price={product.price}  />
+            price={product.price} id={product.id} triggerList={this.props.triggerApp}/>
           )
         })
       }
