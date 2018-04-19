@@ -3,6 +3,11 @@ import logo from './logo.svg';
 import Axios from 'axios'
 import ProductList from './ProductList/ProductList'
 import './App.css';
+// Import the css file
+import 'react-responsive-modal/lib/react-responsive-modal.css';
+import Modal from 'react-responsive-modal/lib/css';
+
+
 
 /*
   
@@ -119,12 +124,26 @@ ReactDOM.render(
                       </ul>
                      <label>Precio</label>  
                       <ul> <input type="number" min="159" max="20990" defaultValue="4999" value={this.state.precioProducto} onChange={this.updatePrecioP.bind(this)} /> </ul>
-          
-                      <div>
-                       <button onClick={this.agregarProducto.bind(this)} className="btn btn-primary"  > Agregar</button>
-                       <input type="button"  className="btn btn-danger" value="Cancelar" onClick = {this.loadCancelar}></input>  
+                      <div class="container">
+                        <div class="row justify-content-md-center">
+                          <div class="col col-lg-2">
+                           <button onClick={this.agregarProducto.bind(this)} className="btn btn-primary"  > Agregar</button>
+                          </div>
+                          <div class="col col-lg-2">
+                           <input type="button"  className="btn btn-danger" value="Cancelar" onClick = {this.loadCancelar}></input>  
+                          </div>
+                        </div>
                       </div>
+
+                      <footer className="py-5 bg-dark">
+                        <div className="container">
+                          <p className="m-0 text-center text-white">¡Gracias por su visita!</p>
+                        </div>
+                      </footer>
+
                   </div>
+
+                 
                 );
             }
           
@@ -199,14 +218,24 @@ ReactDOM.render(
                           <option value="internacional">Internacional</option>
                         </select> 
                       </ul>
-                     <label>Precio</label>  
+                      <label>Precio</label>  
                       <ul> <input type="number" min="159" max="20990" defaultValue="4999" value={this.state.precioProducto} onChange={this.updatePrecioP.bind(this)} /> </ul>
-          
-
-                      <div>
-                        <button onClick={this.agregarProducto.bind(this)} className="btn btn-primary"  > Editar </button>
-                        <input type="button"  className="btn btn-danger" value="Cancelar" onClick = {this.loadCancelar}></input>
+                      <div class="container">                      
+                        <div class="row justify-content-md-center">
+                          <div class="col col-lg-2">
+                            <button onClick={this.agregarProducto.bind(this)} className="btn btn-primary"  > Editar </button>
+                          </div>
+                          <div class="col col-lg-2">
+                            <input type="button"  className="btn btn-danger" value="Cancelar" onClick = {this.loadCancelar}></input>
+                          </div>
+                        </div>
                       </div>
+                  
+                    <footer className="py-5 bg-dark">
+                      <div className="container">
+                        <p className="m-0 text-center text-white">¡Gracias por su visita!</p>
+                      </div>
+                    </footer>
                   </div>
                 );
             }
@@ -232,15 +261,17 @@ ReactDOM.render(
               });
             }
             agregarProducto(){
-              alert('Producto agregado ' + this.state.nombreProducto);
+              alert('Producto editado ' + this.state.nombreProducto);
             }
           }
 
-class App extends Component {
+class App extends React.Component {
 
 
 
     state = {
+       open:false,
+
         loading: true,
         products: [],
         color: 'aquamarine',
@@ -300,6 +331,18 @@ class App extends Component {
             }
         ]
     }
+
+    onOpenModal = () => {
+      this.setState({ open: true });
+    };
+   
+    onCloseModal = () => {
+      this.setState({ open: false });
+    };
+
+
+
+
     changeToSTring= () => {
       console.log(this.state.products)
 
@@ -352,9 +395,23 @@ class App extends Component {
     componentWillUnmount() {
     }
 
+
+    loadCancelar = () => {
+              this.setState({view: "Cancelar"});
+            }
+
+    loadEliminarProducto = () => {
+              ///Eliminar Producto
+            }
+
     render() {
-      if (this.state.view === "Agregar") return  <ComponentB  color={this.state.color} /> ;
-      if (this.state.view === "Editar") return  <ComponentC color={this.state.color} /> ;
+
+
+      const { open } = this.state;
+
+      if (this.state.view === "Cancelar") return  <App  /> ;
+      if (this.state.view === "Agregar") return  <ComponentB /> ;
+      if (this.state.view === "Editar") return  <ComponentC /> ;
 
         return ( 
         <div className = "App" >
@@ -386,7 +443,23 @@ class App extends Component {
                   <br></br>
                   <div class="row" className="text-center">
                     <div class="col col-lg-4" >
-                      <input type="button"  className="btn btn-danger" value="Eliminar"></input>   
+                      <div>
+                        <button className="btn btn-danger" onClick={this.onOpenModal}>Eliminar</button>
+                        <Modal open={open} onClose={this.onCloseModal} little >
+                          <h2>Eliminar producto</h2>
+                          <p>
+                            ¿Esta seguro que desea eliminar el producto?
+                          </p>
+                          <div class="row">
+                            <div class="col col-lg-6">
+                              <input type="button"  className="btn btn-primary" value="Cancelar" onClick = {this.loadCancelar}></input>
+                            </div>
+                            <div class="col col-lg-6">
+                              <input type="button"  className="btn btn-danger" value="Confirmar" onClick = {this.loadEliminarProducto}></input>
+                            </div>
+                          </div>
+                        </Modal>
+                      </div> 
                     </div>      
                   </div>
                 </div>
@@ -401,17 +474,18 @@ class App extends Component {
               </div>
         
             </div>
-        
-            <footer className="py-5 bg-dark">
-              <div className="container">
-                <p className="m-0 text-center text-white">¡Gracias por su visita!</p>
-              </div>
-            </footer>
-            
+            <div>  
+              <footer className="py-5 bg-dark">
+                <div className="container">
+                  <p className="m-0 text-center text-white">¡Gracias por su visita!</p>
+                </div>
+              </footer>
+            </div>
         </div>
         );
     }
 }
+
 
 
 export default App;
