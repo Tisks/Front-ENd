@@ -9,6 +9,7 @@ import Modal from 'react-responsive-modal/lib/css';
 
 
 
+
 /*
   
 // You can choose your kind of history here (e.g. browserHistory)
@@ -113,17 +114,17 @@ ReactDOM.render(
                     <h1>Agregar Producto</h1>
           
                       <label>Nombre del producto</label>  
-                      <ul><input type="text" value={this.state.nombreProducto} onChange={this.updateNombreP.bind(this)} /> </ul>
+                      <ul><input type="text" value={this.state.nombreProducto} onChange={this.updateNombreP.bind(this)} required="required" /> </ul>
                       <label>Fecha de vencimiento</label>  
-                      <ul> <input type="date" value={this.state.fechaVencimiento} onChange={this.updateFechaV.bind(this)} /> </ul>
+                      <ul> <input type="date" value={this.state.fechaVencimiento} onChange={this.updateFechaV.bind(this)} required /> </ul>
                       <label>Categoría</label>  
-                      <ul><select value={this.state.categoriaProducto} onChange={this.updateCategoriaP.bind(this)}>
+                      <ul><select value={this.state.categoriaProducto} onChange={this.updateCategoriaP.bind(this)} required>
                           <option value="nacional">Nacional</option>
                           <option value="internacional">Internacional</option>
                         </select> 
                       </ul>
                      <label>Precio</label>  
-                      <ul> <input type="number" min="159" max="20990" defaultValue="4999" value={this.state.precioProducto} onChange={this.updatePrecioP.bind(this)} /> </ul>
+                      <ul> <input type="number" min="159" max="20990" Value="4990" value={this.state.precioProducto} onChange={this.updatePrecioP.bind(this)} required/> </ul>
                       <div class="container">
                         <div class="row justify-content-md-center">
                           <div class="col col-lg-2">
@@ -444,7 +445,7 @@ class App extends React.Component {
                   <div class="row" className="text-center">
                     <div class="col col-lg-4" >
                       <div>
-                        <button className="btn btn-danger" onClick={this.onOpenModal}>Eliminar</button>
+                        <input type="button"  className="btn btn-danger" value="Eliminar" onClick = {this.onOpenModal}></input>
                         <Modal open={open} onClose={this.onCloseModal} little >
                           <h2>Eliminar producto</h2>
                           <p>
