@@ -337,7 +337,7 @@ class App extends React.Component {
 
     state = {
        open:false,
-
+        childRef: null,
         loading: true,
         products: [],
         color: 'aquamarine',
@@ -491,16 +491,24 @@ class App extends React.Component {
     }
     componentDidMount() {
         this.fetchProducts()
-        document.addEventListener("mousedown", this.handleClickOutside);
 
     }
     componentWillUnmount() {
-      document.removeEventListener("mousedown", this.handleClickOutside);
 
     }
 
     loadNullify = (estado) => {
       this.setState({estado: ""});
+    }
+    unselectProduct(){
+        this.setState({propProduct: []})
+    }
+    handleClickOutside = (e) =>{
+        if(this.childRef.contains(e.target)){
+          return;
+        }
+        this.unselectProduct();
+
     }
    
     /**
