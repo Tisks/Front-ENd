@@ -4,6 +4,8 @@ import Axios from 'axios'
 import ProductList from './ProductList/ProductList'
 import './App.css';
 
+
+// IMPORTANTE   console.log(this.props.products[0].price), ASI SE SACAN LOS PROPS
 /*
   
 // You can choose your kind of history here (e.g. browserHistory)
@@ -72,21 +74,51 @@ ReactDOM.render(
             */
 
 
-           class ComponentB extends Component{
-            constructor(){
-              super();
+           class AppAgregar extends Component{
+            constructor(props){
+              super(props);
+
               this.state ={
                 nombreProducto:"",
                 fechaVencimiento:"",
-                categoriaProducto:"",
+                categoryProducto:"",
                 precioProducto:"",
+                view: ""
               }
             }
           
             render(){
+              if (this.state.view === "Cancelar") return  <App /> ;
               console.log(this.props)
                 return(
                   <div  className="text-center">
+                    <nav className="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+                        <div className="container">
+                          <a className="navbar-brand"  href="#" onClick={this.loadMenu}>Start Bootstrap</a>
+                          <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" 
+                                aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+                            <span className="navbar-toggler-icon"></span>
+                          </button>
+                          <div className="collapse navbar-collapse" id="navbarResponsive">
+                            <ul className="navbar-nav ml-auto">
+                              <li className="nav-item active">
+                                <a className="nav-link" href="#">Home
+                                  <span className="sr-only">(current)</span>
+                                </a>
+                              </li>
+                              <li className="nav-item">
+                                <a className="nav-link" href="#">About</a>
+                              </li>
+                              <li className="nav-item">
+                                <a className="nav-link" href="#">Services</a>
+                              </li>
+                              <li className="nav-item">
+                                <a className="nav-link" href="#">Contact</a>
+                              </li>
+                            </ul>
+                          </div>
+                        </div>
+                      </nav>
                     <h1>Agregar Producto</h1>
           
                       <label>Nombre del producto</label>  
@@ -94,22 +126,24 @@ ReactDOM.render(
                       <label>Fecha de vencimiento</label>  
                       <ul> <input type="date" value={this.state.fechaVencimiento} onChange={this.updateFechaV.bind(this)} /> </ul>
                       <label>Categoría</label>  
-                      <ul><select value={this.state.categoriaProducto} onChange={this.updateCategoriaP.bind(this)}>
+                      <ul><select value={this.state.categoryProducto} onClick={this.updatecategoryP.bind(this)}>
                           <option value="nacional">Nacional</option>
                           <option value="internacional">Internacional</option>
                         </select> 
                       </ul>
                      <label>Precio</label>  
-                      <ul> <input type="number" min="159" max="20990" defaultValue="4999" value={this.state.precioProducto} onChange={this.updatePrecioP.bind(this)} /> </ul>
+                      <ul> <input type="number" min="159" max="20990" value={this.state.precioProducto} onChange={this.updatePrecioP.bind(this)} /> </ul>
           
                       <div>
                         <button onClick={this.agregarProducto.bind(this)} className="btn btn-primary"  > Agregar </button>
-                        <button onClick={this.resetForm} type="button" className="btn btn-danger"> Cancelar </button>
+                        <button onClick={this.loadMenu} type="button" className="btn btn-danger"> Cancelar </button>
                       </div>
                   </div>
                 );
             }
-          
+            loadMenu = () => {
+              this.setState({view: "Cancelar"});
+            }
             updateNombreP(event){
               this.setState({
                 nombreProducto: event.target.value
@@ -120,9 +154,9 @@ ReactDOM.render(
                 fechaVencimiento: event.target.value
               });
             }
-            updateCategoriaP(event){
+            updatecategoryP(event){
               this.setState({
-                categoriaProducto: event.target.value
+                categoryProducto: event.target.value
               });
             }
             updatePrecioP(event){
@@ -131,47 +165,107 @@ ReactDOM.render(
               });
             }
             agregarProducto(){
-              alert('Producto agregado ' + this.state.nombreProducto);
+             
+              let axiosConfig = {
+                headers: {
+                    'Content-Type': 'application/json;charset=UTF-8',
+                    "Access-Control-Allow-Origin": "@crossorigin",
+                }
+              };             
+              const jsonAgregar ={
+                name: this.state.nombreProducto,
+                category: this.state.categoryProducto,
+                price: parseInt(this.state.precioProducto)
+              };
+             
+
+
+         
+              Axios.post('http://138.197.105.209:2323/app/products/create', jsonAgregar, axiosConfig)
+                  .then((res) => {
+                    console.log("RESPONSE RECEIVED: ", res);
+                    alert('Producto agregado ' + this.state.nombreProducto);
+
+                  })
+                  .catch((err) => {
+                    console.log("AXIOS ERROR: ", err);
+                  })
             }
           }
           
           
           
-          class ComponentC extends Component{
+          class AppEditar extends Component{
             constructor(props){
               super(props);
+              console.log(this.props.products.name)
+              console.log(this.props.products.category)
+
              this.state ={
                 nombreProducto:"",
                 fechaVencimiento:"",
-                categoriaProducto:"",
+                categoryProducto:"",
                 precioProducto:"",
+                view: ""
+
               }
             }
           
             render(){
+              if (this.state.view === "Cancelar") return  <App /> ;
                 return(
                   <div  className="text-center">
+                   <nav className="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+                      <div className="container">
+                        <a className="navbar-brand" href="#" onClick={this.loadMenu}>Start Bootstrap</a>
+                        <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" 
+                              aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+                          <span className="navbar-toggler-icon"></span>
+                        </button>
+                        <div className="collapse navbar-collapse" id="navbarResponsive">
+                          <ul className="navbar-nav ml-auto">
+                            <li className="nav-item active">
+                              <a className="nav-link" href="#">Home
+                                <span className="sr-only">(current)</span>
+                              </a>
+                            </li>
+                            <li className="nav-item">
+                              <a className="nav-link" href="#">About</a>
+                            </li>
+                            <li className="nav-item">
+                              <a className="nav-link" href="#">Services</a>
+                            </li>
+                            <li className="nav-item">
+                              <a className="nav-link" href="#">Contact</a>
+                            </li>
+                          </ul>
+                        </div>
+                      </div>
+                    </nav>
                     <h1>Editar Producto</h1>
           
                       <label>Nombre del producto</label>  
-                      <ul><input type="text" value={this.state.nombreProducto} onChange={this.updateNombreP.bind(this)} /> </ul>
+                      <ul><input type="text" placeholder={this.props.products.name} onChange={this.updateNombreP.bind(this)} /> </ul>
                       <label>Fecha de vencimiento</label>  
                       <ul> <input type="date" value={this.state.fechaVencimiento} onChange={this.updateFechaV.bind(this)} /> </ul>
                       <label>Categoría</label>  
-                      <ul><select value={this.state.categoriaProducto} onChange={this.updateCategoriaP.bind(this)}>
-                          <option value="nacional">Nacional</option>
-                          <option value="internacional">Internacional</option>
+                      <ul><select value={this.props.products.category} onChange={this.updatecategoryP.bind(this)}>
+                          <option value="nacional">nacional</option>
+                          <option value="importada">importada</option>
                         </select> 
                       </ul>
                      <label>Precio</label>  
-                      <ul> <input type="number" min="159" max="20990" defaultValue="4999" value={this.state.precioProducto} onChange={this.updatePrecioP.bind(this)} /> </ul>
+                      <ul> <input type="number" min="159" max="20990"  placeholder={(this.props.products.price).toString()} onChange={this.updatePrecioP.bind(this)} /> </ul>
           
                       <div>
-                        <button onClick={this.agregarProducto.bind(this)} className="btn btn-primary"  > Agregar </button>
-                        <button onClick={this.resetForm} type="button" className="btn btn-danger"> Cancelar </button>
+                        <button onClick={this.editarProducto.bind(this)} className="btn btn-primary"  > Editar </button>
+                        <button onClick={this.loadMenu} type="button" className="btn btn-danger"> Cancelar </button>
                       </div>
                   </div>
                 );
+            }
+            loadMenu = () => {
+              this.setState({view: "Cancelar"});
             }
           
             updateNombreP(event){
@@ -184,9 +278,9 @@ ReactDOM.render(
                 fechaVencimiento: event.target.value
               });
             }
-            updateCategoriaP(event){
+            updatecategoryP(event){
               this.setState({
-                categoriaProducto: event.target.value
+                categoryProducto: event.target.value
               });
             }
             updatePrecioP(event){
@@ -194,15 +288,41 @@ ReactDOM.render(
                 precioProducto: event.target.value
               });
             }
-            agregarProducto(){
-              alert('Producto agregado ' + this.state.nombreProducto);
+            editarProducto(){
+              let axiosConfig = {
+                headers: {
+                    'Content-Type': 'application/json;charset=UTF-8',
+                    "Access-Control-Allow-Origin": "@crossorigin",
+                }
+              };             
+              const jsonEdicion ={
+                name: this.state.nombreProducto,
+                category: this.state.categoryProducto,
+                price: parseInt(this.state.precioProducto)
+              };
+
+              Axios.put('http://138.197.105.209:2323/app/products/edit/'+(this.props.products.id).toString(), jsonEdicion, axiosConfig)
+              .then((res) => {
+                console.log("RESPONSE RECEIVED: ", res);
+                alert('Producto editado ' + this.state.nombreProducto);
+
+              })
+              .catch((err) => {
+                console.log("AXIOS ERROR: ", err);
+              })
+
+
             }
           }
 
 class App extends Component {
 
 
+  constructor( props ) {
+    super( props );
 
+    this.handleCLickIdentify = this.handleCLickIdentify.bind(this)
+  }
     state = {
         loading: true,
         products: [],
@@ -210,58 +330,95 @@ class App extends Component {
         color2: 'red',
         view: '',
         producto:[],
+        propProduct: [],
 
 
-        setter: false,
+        setterEditar: false,
+        setterEliminar: false,
+
         jsons: [{
                 "id": "2baf70d1-42bb-4437-b551-e5fed5a87abe",
-                "nombre": "Chela",
+                "name": "Chela",
                 "fechaVencimiento": "ojala nunca",
-                "categoria": "importada",
-                "precio": "luka"
+                "category": "importada",
+                "price": "luka"
 
             },
             {
                 "id": "2baf70d1-4assa2bb-4437-b551-e5fed5a87abe",
-                "nombre": "agua",
+                "name": "agua",
                 "fechaVencimiento": "ojala nuncax4 ",
-                "categoria": "nacional",
-                "precio": "5666"
+                "category": "nacional",
+                "price": "5666"
 
             },
             {
                 "id": "2baf7sdsd0d1-42bb-4437-b551-e5fed5a87abe",
-                "nombre": "vaso plastico",
+                "name": "vaso plastico",
                 "fechaVencimiento": "ojala nuncax2",
-                "categoria": "importada",
-                "precio": "muchas lukas"
+                "category": "importada",
+                "price": "muchas lukas"
+
+            },
+            {
+                "id": "2baf70d1-4assa2bb-4437-b551-e5fed5a87abe",
+                "name": "agua",
+                "fechaVencimiento": "ojala nuncax4 ",
+                "category": "nacional",
+                "price": "5666"
 
             },
             {
                 "id": "2baf70d1-4assa2bb-4437-b551-e5fed5a87abe",
                 "nombre": "agua",
                 "fechaVencimiento": "ojala nuncax4 ",
-                "categoria": "nacional",
-                "precio": "5666"
+                "category": "nacional",
+                "price": "5666"
 
             },
             {
                 "id": "2baf70d1-4assa2bb-4437-b551-e5fed5a87abe",
                 "nombre": "agua",
                 "fechaVencimiento": "ojala nuncax4 ",
-                "categoria": "nacional",
-                "precio": "5666"
-
-            },
-            {
-                "id": "2baf70d1-4assa2bb-4437-b551-e5fed5a87abe",
-                "nombre": "agua",
-                "fechaVencimiento": "ojala nuncax4 ",
-                "categoria": "nacional",
-                "precio": "5666"
+                "category": "nacional",
+                "price": "5666"
 
             }
         ]
+    }
+    productDeleter = () =>{
+      if(this.state.propProduct.lenght !== 0){
+        let axiosConfig = {
+          headers: {
+              'Content-Type': 'application/json;charset=UTF-8',
+              "Access-Control-Allow-Origin": "@crossorigin",
+          }
+        };   
+        Axios.put('http://138.197.105.209:2323/app/products/delete/'+(this.state.propProduct.id).toString(),axiosConfig)
+           .then((res) => {
+              console.log("RESPONSE RECEIVED: ", res);
+               alert('Producto editado ' + this.state.nombreProducto);
+
+            })
+           .catch((err) => {
+              console.log("AXIOS ERROR: ", err);
+             })
+          
+
+      }
+
+
+
+    }
+    handleCLickIdentify= (jsons) =>{
+
+      this.setState({
+        propProduct: jsons
+      })
+      console.log(jsons)
+      console.log(this.state.propProduct)
+  
+  
     }
     changeToSTring= () => {
       console.log(this.state.products)
@@ -271,13 +428,14 @@ class App extends Component {
        Axios.get('http://138.197.105.209:2323/app/products/list')
             .then(response => {
                 this.setState({ products: response.data });
-                this.changeToSTring()
+                console.log('Aca va la info de los products')
+                console.log(this.state.products)
             })
             .catch(function(error) {
                 console.log(error)
             })
 
-        /*Axios.get('https://ghibliapi.herokuapp.com/films')
+       /* Axios.get('https://ghibliapi.herokuapp.com/films')
             .then(response => {
                 console.log(this.state.jsons);
                 this.setState({ products: this.state.jsons });
@@ -296,7 +454,10 @@ class App extends Component {
     }
 
     loadEditar= () => {
-      this.setState({view: "Editar"});
+      this.setState({setterEditar: true});
+    }
+    loadEliminar=() => {
+      this.setState({setterEliminar: true});
     }
 
     handleChangeColor = () => {
@@ -316,8 +477,9 @@ class App extends Component {
     }
 
     render() {
-      if (this.state.view === "Agregar") return  <ComponentB  color={this.state.color} /> ;
-      if (this.state.view === "Editar") return  <ComponentC color={this.state.color} /> ;
+      if (this.state.view === "Agregar")return  <AppAgregar /> ;
+      if (this.state.setterEditar) return  <AppEditar products={this.state.propProduct} /> ;
+      if (this.state.setterEliminar) this.productDeleter();
 
         return ( 
         <div className = "App" >
@@ -361,7 +523,7 @@ class App extends Component {
                   <input type="button"  className="btn btn-warning" value="Editar" onClick = {this.loadEditar}></input>                      
                   </ul>
                   <ul>
-                  <input type="button"  className="btn btn-danger" value="Eliminar"></input>   
+                  <input type="button"  className="btn btn-danger" value="Eliminar"onClick = {this.loadEliminar} ></input>   
                   </ul>       
                 </div>
               
@@ -372,8 +534,7 @@ class App extends Component {
 
 
                   <div className="row">
-                  <ProductList products = { this.state.products }
-                    /> 
+                  <ProductList products = { this.state.products } triggerApp={this.handleCLickIdentify}  /> 
         
                   </div>
         

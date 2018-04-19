@@ -34,30 +34,23 @@ class Product extends Component {
   
   constructor(props) {
     super(props);
-    console.log(this.props)
+   // console.log(this.props)
     this.state.myProps = this.props 
-    console.log(this.state.myProps)
-    this.handleCLick = this.handleCLick.bind(this)
+   // console.log(this.state.myProps)
+    this.identifierClick = this.identifierClick.bind(this)
 
 
   }
-
-  numToString(){
-
-
-  }
-
-  handleCLick(){
-    console.log(this.state.myProps)
+  identifierClick(){
+    this.props.triggerList(this.state.myProps)
 
   }
-  componentDidMount() {
-    this.numToString()
-}
+
+
   render() {
 
     return ( 
-      <div className="col-lg-4 col-md-6 mb-4"   onClick={this.handleCLick}>
+      <div className="col-lg-4 col-md-6 mb-4"   onClick={this.identifierClick}>
         <div className="card h-100">
           <a href="#"><img className="card-img-top" src="http://placehold.it/700x400" alt=""></img></a>
           <div className="card-body">
