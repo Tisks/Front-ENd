@@ -12,23 +12,16 @@ class ProductList extends Component {
 
     this.keyCount = 0;
     this.getKey = this.getKey.bind(this);
-    //this.handleCLickApp = this.handleCLickApp.bind(this)
   }
- /* handleCLickApp(){
-      this.props.triggerApp()
-
-
-  }*/
   getKey(){
     return this.keyCount++;
   }
-  //fechaVencimiento={product.fechaVencimiento} 
     buildProduct(){
         return this.props.products.map((product) => {
           return(
             <Product key={this.getKey()} name={product.name} 
             category={product.category} 
-            price={product.price} id={product.id} expiration_date={product.expiration_date} triggerList={this.props.triggerApp}/>
+            price={product.price} id={product.id} expirationDate={product.expirationDate} triggerList={this.props.triggerApp}/>
           )
         })
       }

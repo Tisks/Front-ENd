@@ -7,78 +7,7 @@ import './App.css';
 import 'react-responsive-modal/lib/react-responsive-modal.css';
 import Modal from 'react-responsive-modal/lib/css';
 
-
-
-
-/*
-  
-// You can choose your kind of history here (e.g. browserHistory)
-// Your routes.js file
-
-ReactDOM.render(
-  <Router routes={routes} history={history} />,
-  document.getElementById('your-app')
-);
-/*ReactDOM.render( 
-    < App / > , document.getElementById('root')
-);
-    <div className = "App-intro" >
-                    <ProductList products = { this.state.products }
-                    /> 
-                  </div> 
-                      <div className="col-lg-4 col-md-6 mb-4">
-                      <div className="card h-100">
-                        <a href="#"><img className="card-img-top" src="http://placehold.it/700x400" alt=""></img></a>
-                        <div className="card-body">
-                          <h4 className="card-title">
-                            <a href="#">Item Three</a>
-                          </h4>
-                          <h5>$24.99</h5>
-                          <p className="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Amet numquam aspernatur!</p>
-                        </div>
-                        <div className="card-footer">
-                          <small className="text-muted">&#9733; &#9733; &#9733; &#9733; &#9734;</small>
-                        </div>
-                      </div>
-                    </div>
-        return ( 
-          <div className = "App" >
-             <header className = "App-header" >
-               <img src = { logo }
-              className = "App-logo"
-               alt = "logo" / >
-               <h1 className = "App-title" > Bienvenido a la...ayudantía React( ? ) </h1> 
-               <button onClick = { this.handleChangeColor } > Cambiar Color! </button>  
-             </header > 
-             <div className = "App-intro" >
-                <FilmList films = { this.state.films }
-                 color = { this.state.color }/> 
-               </div> 
-          </div>
-          */
-
-/*
-          Código del producto
-        Nombre del producto
-         Fecha de vencimiento
-          Categoría (Importado, Nacional)
-          price+
-          
-          
-          
-          
-        Axios.get('https://ghibliapi.herokuapp.com/films')
-            .then(response => {
-                console.log(response);
-                this.setState({ films: response.data });
-            })
-            .catch(function(error) {
-                console.log(error)
-            })
-            */
-
-
-           class AppAgregar extends Component{
+  class AppAgregar extends Component{
             constructor(props){
               super(props);
               this.state ={
@@ -183,13 +112,13 @@ ReactDOM.render(
               };             
               const jsonAgregar ={
                 name: this.state.nombreProducto,
-                expiration_date: this.state.fechaVencimiento,
+                expirationDate: this.state.fechaVencimiento,
                 category: this.state.categoryProducto,
                 price: parseInt(this.state.priceProducto)
               };
     
          
-              Axios.post('http://138.197.105.209:2323/app/products/create', jsonAgregar, axiosConfig)
+              Axios.post('http://165.227.189.25:8080/backend-0.0.1-SNAPSHOT/products/create', jsonAgregar, axiosConfig)
                   .then((res) => {
                     console.log("RESPONSE RECEIVED: ", res);
                     alert('Producto agregado ' + this.state.nombreProducto);
@@ -208,19 +137,15 @@ ReactDOM.render(
           }
           
 
-          class AppEditar extends Component{
+  class AppEditar extends Component{
             constructor(props){
               super(props);
-              console.log('Aqui estan los props')
-              console.log(this.props.products.name)
-              console.log(this.props.products.category)
-              console.log(this.props.products.expiration_date)
               this.state ={
-                nombreProducto:"",
-                fechaVencimiento:"",
-                categoryProducto:"",
-                priceProducto:"",
-                view:""
+                nombreProducto:this.props.products.name,
+                fechaVencimiento:this.props.products.expirationDate,
+                categoryProducto: this.props.products.category,
+                priceProducto: this.props.products.price,
+                view:"",
                }
             }
             
@@ -249,18 +174,18 @@ ReactDOM.render(
                     <h1 className="aa">Editar Producto</h1>
           
                       <label>Nombre del producto</label>  
-                      <ul><input type="text" value={this.props.products.name} onChange={this.updateNombreP.bind(this)} /> </ul>
+                      <ul><input type="text" value={this.state.nombreProducto} onChange={this.updateNombreP.bind(this)} /> </ul>
                       <label>Fecha de vencimiento</label>  
-                      <ul> <input type="date" value={this.props.products.expiration_date} onChange={this.updateFechaV.bind(this)} /> </ul>
+                      <ul> <input type="date" value={this.state.fechaVencimiento} onChange={this.updateFechaV.bind(this)} /> </ul>
                       <label>Categoría</label>  
                       <ul><select onChange={this.updatecategoryP.bind(this)}>
-                         <option selected hidden>{this.props.products.category} </option>
+                         <option selected hidden>{this.state.categoryProducto} </option>
                           <option value="nacional">nacional</option>
                           <option value="importada">importada</option>
                         </select> 
                       </ul>
                       <label>price</label>  
-                      <ul> <input type="number" min="159" max="20990"  valuedefault={this.props.products.price} onChange={this.updatepriceP.bind(this)} /> </ul>
+                      <ul> <input type="number" min="159" max="20990"  value={this.state.priceProducto} onChange={this.updatepriceP.bind(this)} /> </ul>
                       <div className="container">                      
                         <div className="row justify-content-md-center">
                           <div className="col col-lg-2">
@@ -283,12 +208,12 @@ ReactDOM.render(
           
             updateNombreP(event){
               this.setState({
-                nombreProducto: event.target.value
+                nombreProducto: event.target.value,
               });
             }
             updateFechaV(event){
               this.setState({
-                fechaVencimiento: event.target.value
+                fechaVencimiento: event.target.value,
               });
             }
             updatecategoryP(event){
@@ -298,30 +223,25 @@ ReactDOM.render(
             }
             updatepriceP(event){
               this.setState({
-                priceProducto: event.target.value
+                priceProducto: event.target.value,
               });
             }
             editarProducto(){
+              if(this.state.nombreProducto, this.state.fechaVencimiento , this.state.categoryProducto,this.state.priceProducto){
               let axiosConfig = {
                 headers: {
                     'Content-Type': 'application/json;charset=UTF-8',
                     "Access-Control-Allow-Origin": "@crossorigin",
                 }
               };             
-              console.log("aqui estan las cosas")
-              console.log(this.state.nombreProducto)
-              console.log(this.state.fechaVencimiento)
-              console.log(this.state.categoryProducto)
-              console.log(this.state.priceProducto)
-
               const jsonEdicion ={
                 name: this.state.nombreProducto,
-                expiration_date: this.state.fechaVencimiento,
+                expirationDate: this.state.fechaVencimiento,
                 category: this.state.categoryProducto,
                 price: parseInt(this.state.priceProducto)
               };
 
-              Axios.put('http://138.197.105.209:2323/app/products/edit/'+(this.props.products.id).toString(), jsonEdicion, axiosConfig)
+              Axios.put('http://165.227.189.25:8080/backend-0.0.1-SNAPSHOT/products/edit/'+(this.props.products.id).toString(), jsonEdicion, axiosConfig)
               .then((res) => {
                 console.log("RESPONSE RECEIVED: ", res);
                 alert('Producto editado ' + this.state.nombreProducto);
@@ -332,6 +252,11 @@ ReactDOM.render(
               })
 
             }
+            else{
+              alert('Debes completar todos los campos');
+
+            }
+           }
           }
 
 class App extends React.Component {
@@ -346,57 +271,13 @@ class App extends React.Component {
         childRef: null,
         loading: true,
         products: [],
-        color: 'aquamarine',
-        color2: 'red',
         view: '',
         producto:[],
         propProduct: [],
 
 
         setter: false,
-        jsons: [{
-                "name": "Chela",
-                "fechaVencimiento": "ojala nunca",
-                "category": "importada",
-                "price": 1000
-
-            },
-            {
-                "name": "agua",
-                "fechaVencimiento": "ojala nuncax4 ",
-                "category": "nacional",
-                "price": 5666
-
-            },
-            {
-                "name": "vaso plastico",
-                "fechaVencimiento": "ojala nuncax2",
-                "category": "importada",
-                "price": 1500
-
-            },
-            {
-                "name": "agua",
-                "fechaVencimiento": "ojala nuncax4 ",
-                "category": "nacional",
-                "price": 5666
-
-            },
-            {
-              "name": "vaso plastico",
-              "fechaVencimiento": "ojala nuncax2",
-              "category": "importada",
-              "price": 1500
-
-          },
-          {
-            "name": "vaso plastico",
-            "fechaVencimiento": "ojala nuncax2",
-            "category": "importada",
-            "price": 1500
-
-        },
-        ]
+        
     }
 
     productDelete = () =>{
@@ -407,7 +288,7 @@ class App extends React.Component {
                 "Access-Control-Allow-Origin": "@crossorigin",
             }
           };   
-          Axios.delete('http://138.197.105.209:2323/app/products/delete/'+(this.state.propProduct.id).toString(),axiosConfig)
+          Axios.delete('http://165.227.189.25:8080/backend-0.0.1-SNAPSHOT/products/delete/'+(this.state.propProduct.id).toString(),axiosConfig)
             .then((res) => {
                 console.log("RESPONSE RECEIVED: ", res);
                 this.loadCancelar();
@@ -446,15 +327,8 @@ class App extends React.Component {
       this.setState({ open: false });
     };
 
-
-
-
-    changeToSTring= () => {
-      console.log(this.state.products)
-
-    }
     fetchProducts() {
-      Axios.get('http://138.197.105.209:2323/app/products/list')
+      Axios.get('http://165.227.189.25:8080/backend-0.0.1-SNAPSHOT/products/list')
             .then(response => {
                 this.setState({ products: response.data });
                 this.changeToSTring()
@@ -462,20 +336,6 @@ class App extends React.Component {
             .catch(function(error) {
                 console.log(error)
             })
-
-        /*Axios.get('https://ghibliapi.herokuapp.com/films')
-            .then(response => {
-                console.log(this.state.jsons);
-                this.setState({ products: this.state.jsons });
-                console.log(this.state.products)
-            })
-            .catch(function(error) {
-                console.log(error)
-            })*/
-            // console.log(this.state.color2)
-            //this.setState({ color2: this.state.color });
-            // console.log(this.state.color2);
-
     }
     loadAgregar = () => {
       this.setState({view: "Agregar"});
@@ -485,16 +345,6 @@ class App extends React.Component {
       this.setState({view: "Editar"});
     }
 
-    handleChangeColor = () => {
-        if (this.state.setter === false) {
-            this.setState({ setter: true })
-            this.setState({ color: 'red' })
-        } else {
-            this.setState({ color: 'aquamarine' })
-            this.setState({ setter: false })
-
-        }
-    }
     componentDidMount() {
         this.fetchProducts()
 
@@ -509,17 +359,7 @@ class App extends React.Component {
     unselectProduct(){
         this.setState({propProduct: []})
     }
-    handleClickOutside = (e) =>{
-        if(this.childRef.contains(e.target)){
-          return;
-        }
-        this.unselectProduct();
-
-    }
-   
-    /**
-     * Set the wrapper ref
-     */
+    
 
     loadCancelar = () => {
               this.setState({view: "Cancelar"});
