@@ -28,7 +28,7 @@ class ProductList extends Component {
           return(
             <Product key={this.getKey()} name={product.name} 
             category={product.category} 
-            price={product.price} id={product.id} triggerList={this.props.triggerApp}/>
+            price={product.price} id={product.id} expiration_date={product.expiration_date} triggerList={this.props.triggerApp}/>
           )
         })
       }

@@ -57,9 +57,9 @@ class Product extends Component {
             <h4 className="card-title">
               <a href="#">{this.props.name}</a>
             </h4>
-            <h5>{this.props.price}</h5>
-            <h5>Deberia existir esto </h5>
-            <p className="card-text">{this.props.category}</p>
+            <h5>${this.props.price}</h5>
+            <h5>{this.props.category}</h5>
+            <p className="card-text">{this.props.expiration_date}</p>
           </div>
          
         </div>

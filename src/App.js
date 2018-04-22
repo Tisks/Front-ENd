@@ -86,7 +86,8 @@ ReactDOM.render(
                 fechaVencimiento:"",
                 categoryProducto:"",
                 priceProducto:"",
-                view:""
+                view:"",
+                expiration_date: ""
               }
             }
             loadCancelar = () => {
@@ -116,11 +117,6 @@ ReactDOM.render(
           
                       <label>Nombre del producto</label>  
                       <ul><input type="text" value={this.state.nombreProducto} onChange={this.updateNombreP.bind(this)} required="required" /> </ul>
-                      
-
-
-
-
                       <label>Fecha de vencimiento</label>  
                       <ul> <input type="date" value={this.state.fechaVencimiento} onChange={this.updateFechaV.bind(this)} required="required" /> </ul>
                       <label>Categoría</label>  
@@ -134,9 +130,6 @@ ReactDOM.render(
                       <div className="container">
                         <div className="row justify-content-md-center">
                           <div className="col col-lg-2">
-
-
-
                            <button onClick={this.agregarProducto.bind(this)} className="btn btn-primary"> Agregar</button>
                           </div>
                           <div className="col col-lg-2">
@@ -190,6 +183,7 @@ ReactDOM.render(
               };             
               const jsonAgregar ={
                 name: this.state.nombreProducto,
+                expiration_date: this.state.fechaVencimiento,
                 category: this.state.categoryProducto,
                 price: parseInt(this.state.priceProducto)
               };
@@ -220,9 +214,14 @@ ReactDOM.render(
               console.log('Aqui estan los props')
               console.log(this.props.products.name)
               console.log(this.props.products.category)
+              console.log(this.props.products.expiration_date)
               this.state ={
-                view: ""
-              }
+                nombreProducto:"",
+                fechaVencimiento:"",
+                categoryProducto:"",
+                priceProducto:"",
+                view:""
+               }
             }
             
 
@@ -252,16 +251,16 @@ ReactDOM.render(
                       <label>Nombre del producto</label>  
                       <ul><input type="text" value={this.props.products.name} onChange={this.updateNombreP.bind(this)} /> </ul>
                       <label>Fecha de vencimiento</label>  
-                      <ul> <input type="date" value={this.props.products.fechaVencimiento} onChange={this.updateFechaV.bind(this)} /> </ul>
+                      <ul> <input type="date" value={this.props.products.expiration_date} onChange={this.updateFechaV.bind(this)} /> </ul>
                       <label>Categoría</label>  
                       <ul><select onChange={this.updatecategoryP.bind(this)}>
                          <option selected hidden>{this.props.products.category} </option>
                           <option value="nacional">nacional</option>
-                          <option value="internacional">importada</option>
+                          <option value="importada">importada</option>
                         </select> 
                       </ul>
                       <label>price</label>  
-                      <ul> <input type="number" min="159" max="20990"  value={this.props.products.price} onChange={this.updatepriceP.bind(this)} /> </ul>
+                      <ul> <input type="number" min="159" max="20990"  valuedefault={this.props.products.price} onChange={this.updatepriceP.bind(this)} /> </ul>
                       <div className="container">                      
                         <div className="row justify-content-md-center">
                           <div className="col col-lg-2">
@@ -309,8 +308,15 @@ ReactDOM.render(
                     "Access-Control-Allow-Origin": "@crossorigin",
                 }
               };             
+              console.log("aqui estan las cosas")
+              console.log(this.state.nombreProducto)
+              console.log(this.state.fechaVencimiento)
+              console.log(this.state.categoryProducto)
+              console.log(this.state.priceProducto)
+
               const jsonEdicion ={
                 name: this.state.nombreProducto,
+                expiration_date: this.state.fechaVencimiento,
                 category: this.state.categoryProducto,
                 price: parseInt(this.state.priceProducto)
               };
@@ -404,7 +410,6 @@ class App extends React.Component {
           Axios.delete('http://138.197.105.209:2323/app/products/delete/'+(this.state.propProduct.id).toString(),axiosConfig)
             .then((res) => {
                 console.log("RESPONSE RECEIVED: ", res);
-                alert('Producto editado ' + this.state.nombreProducto);
                 this.loadCancelar();
 
               })
@@ -458,7 +463,7 @@ class App extends React.Component {
                 console.log(error)
             })
 
-       /* Axios.get('https://ghibliapi.herokuapp.com/films')
+        /*Axios.get('https://ghibliapi.herokuapp.com/films')
             .then(response => {
                 console.log(this.state.jsons);
                 this.setState({ products: this.state.jsons });
